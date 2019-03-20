@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <p>hello</p>
+<div class="product" th:each="Stations : ${allGasStations}">
+    <div class="inner-product">
+        <div class="figure-image thumb">
+            <a th:href="@{'/stations/ + ${stations.address}}"><img
+                    alt="Character Image"></a>
+        </div>
+        <h3 class="product-title" th:text="${stations.address}"><a
+                href="#">Character</a></h3>
+        <!--<small class="price">$19.00</small>-->
+        <p th:text="${stations.city}">Character bio</p>
+        <!--<a href="cart.html" class="button">Add to cart</a>-->
+        <a th:href="@{'/character/' + ${stations.}}" class="button muted">Read Details</a>
+    </div>
+</div> <!-- .product -->
+</div>
 </body>
 </html>
