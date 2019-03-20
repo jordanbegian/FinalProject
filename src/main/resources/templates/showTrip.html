@@ -7,5 +7,10 @@
 <body>
 <h1 th:text="${tripStart}">trip start</h1>
 <h1 th:text="${tripEnd}">trip End</h1>
+
+<div th:each="BusinessInformation : ${businesses}">
+    <p th:text="${BusinessInformation.getName()}"></p>
+
+</div>
 </body>
 </html>
