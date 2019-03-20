@@ -1,5 +1,6 @@
 package com.detroitlabs.FinalProject.controller;
 
+import com.detroitlabs.FinalProject.model.BlankTrip;
 import com.detroitlabs.FinalProject.model.Stations;
 import com.detroitlabs.FinalProject.model.StationsWrapper;
 import com.detroitlabs.FinalProject.service.TripService;
@@ -24,19 +25,26 @@ public class tripController {
     @Autowired
     StationsWrapper stationsWrapper;
 
-//    @RequestMapping("/")
-//    public String displayHomePage(){
-//        return "index";
-//    }
-
     @RequestMapping("/")
-    @ResponseBody
-    public String displayAllIssues(ModelMap modelMap){
-        StationsWrapper stationsWrapper = tripService.DisplayAllGasStation();
-      List<Stations> allGasStations = stationsWrapper.getStations();
-        modelMap.put("allGasStations", allGasStations);
-        return allGasStations.toString();
+    public String displayHomePage(ModelMap modelMap){
+        BlankTrip blankTrip = new BlankTrip();
+        modelMap.put("trip", blankTrip);
+        return "bootstrapHome";
     }
+
+    @RequestMapping("/showtrip")
+    public String displayTripPage(){
+        return "showtrip";
+    }
+
+//    @RequestMapping("/")
+//    @ResponseBody
+//    public String displayAllIssues(ModelMap modelMap){
+//        StationsWrapper stationsWrapper = tripService.DisplayAllGasStation();
+//      List<Stations> allGasStations = stationsWrapper.getStations();
+//        modelMap.put("allGasStations", allGasStations);
+//        return allGasStations.toString();
+//    }
 
 
 }
