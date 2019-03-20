@@ -7,7 +7,9 @@ import com.detroitlabs.FinalProject.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,14 +28,17 @@ public class tripController {
     StationsWrapper stationsWrapper;
 
     @RequestMapping("/")
-    public String displayHomePage(ModelMap modelMap){
-        BlankTrip blankTrip = new BlankTrip();
-        modelMap.put("trip", blankTrip);
+    public String displayHomePage(Model model){
+        model.addAttribute("blankTrip", new BlankTrip());
         return "bootstrapHome";
     }
 
     @RequestMapping("/showtrip")
-    public String displayTripPage(){
+    public String displayTripPage(@ModelAttribute BlankTrip blankTrip, ModelMap modelMap){
+       String tripStart = blankTrip.getStart();
+       String tripEnd = blankTrip.getEnd();
+       modelMap.put("tripStart", tripStart);
+       modelMap.put("tripEnd", tripEnd);
         return "showtrip";
     }
 
