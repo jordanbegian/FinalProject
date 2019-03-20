@@ -5,6 +5,7 @@ import com.detroitlabs.FinalProject.model.Stations;
 import com.detroitlabs.FinalProject.model.StationsWrapper;
 import com.detroitlabs.FinalProject.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,9 @@ public class tripController {
     @Autowired
     StationsWrapper stationsWrapper;
 
+    @Value("${GOOGLE_MAPS_KEY}")
+    private String googleMapsKey;
+
     @RequestMapping("/")
     public String displayHomePage(Model model){
         model.addAttribute("blankTrip", new BlankTrip());
@@ -39,6 +43,7 @@ public class tripController {
        String tripEnd = blankTrip.getEnd();
        modelMap.put("tripStart", tripStart);
        modelMap.put("tripEnd", tripEnd);
+       modelMap.put("googleMapsKey", googleMapsKey);
         return "showtrip";
     }
 

@@ -5,7 +5,12 @@
     <title>Trip</title>
 </head>
 <body>
-<h1 th:text="${tripStart}">trip start</h1>
-<h1 th:text="${tripEnd}">trip End</h1>
+<p th:text="'Trip Start: ' + ${tripStart}">trip start</p>
+<p th:text="'Trip End: ' + ${tripEnd}">trip End</p>
+
+<iframe width="600" height="450" frameborder="0" style="border:0"
+        th:src="@{'https://www.google.com/maps/embed/v1/directions?origin=' + ${tripStart} + '&destination=' + ${tripEnd} + '&key=' + ${googleMapsKey} + '&avoid=tolls|highways'}"
+        allowfullscreen></iframe>
+
 </body>
 </html>
