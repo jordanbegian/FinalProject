@@ -4,6 +4,7 @@ import com.detroitlabs.FinalProject.model.*;
 import com.detroitlabs.FinalProject.service.TripService;
 import com.detroitlabs.FinalProject.service.YelpService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +36,9 @@ public class tripController {
     @Autowired
     StationsWrapper stationsWrapper;
 
+    @Value("${GOOGLE_MAPS_KEY}")
+    private String googleMapsKey;
+
     @RequestMapping("/")
     public String displayHomePage(Model model){
         model.addAttribute("blankTrip", new BlankTrip());
@@ -51,6 +55,7 @@ public class tripController {
        Businesses businesses = yelpService.fetchYelpMostRatedBars(blankTrip.getEnd());
        modelMap.put("businesses",businesses.getBusinesses());
 
+       modelMap.put("googleMapsKey", googleMapsKey);
         return "showtrip";
     }
 
