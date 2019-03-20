@@ -2,8 +2,6 @@ package com.detroitlabs.FinalProject.model;
 
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-
 @Component
 public class BusinessInformation {
     private String name;
