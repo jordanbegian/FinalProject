@@ -1,6 +1,7 @@
 package com.detroitlabs.FinalProject.controller;
 
 import com.detroitlabs.FinalProject.model.*;
+import com.detroitlabs.FinalProject.service.DirectionsService;
 import com.detroitlabs.FinalProject.service.TripService;
 import com.detroitlabs.FinalProject.service.YelpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,6 +36,9 @@ public class tripController {
     TripService tripService;
 
     @Autowired
+    DirectionsService directionsService;
+
+    @Autowired
     StationsWrapper stationsWrapper;
 
     @Value("${GOOGLE_MAPS_KEY}")
@@ -52,6 +57,8 @@ public class tripController {
        modelMap.put("tripStart", tripStart);
        modelMap.put("tripEnd", tripEnd);
 
+       //YELP
+
        Businesses barBusinesses = yelpService.fetchYelpMostRatedBars(blankTrip.getEnd());
        modelMap.put("barBusinesses",barBusinesses.getBusinesses());
 
@@ -64,10 +71,18 @@ public class tripController {
        Businesses entertainmentBusinesses = yelpService.fetchYelpMostRatedEntertainment(blankTrip.getEnd());
        modelMap.put("entertainmentBusinesses", entertainmentBusinesses.getBusinesses());
 
+       //Google Directions
+
+       DirectionSet directionSet =  directionsService.fetchDirectionSetForRoute(tripStart, tripEnd);
+       ArrayList<Step> tripSteps = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps();
+
+       modelMap.put("tripSteps", tripSteps);
+
        modelMap.put("googleMapsKey", googleMapsKey);
+
         return "showtrip";
     }
-
+//putting in a comment
 //    @RequestMapping("/")
 //    @ResponseBody
 //    public String displayAllIssues(ModelMap modelMap){

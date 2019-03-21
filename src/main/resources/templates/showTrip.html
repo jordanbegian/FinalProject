@@ -48,5 +48,13 @@
     <p th:text="'Review Score: ' + ${BusinessInformation.getRating()}"></p>
     <p th:text="'Number of Reviews: ' + ${BusinessInformation.getReviewCount()}"></p>
 </div>
+
+
+<ol th:each="step : ${tripSteps}">
+    <li th:text="'START: Latitude: ' + ${step.getStartLocation().getLatitude()} + ' Longitude: ' + ${step.getStartLocation().getLongitude()}  "></li>
+    <li th:text="'END: Latitude: ' + ${step.getEndLocation().getLatitude()} + ' Longitude: ' + ${step.getEndLocation().getLongitude()}  "></li>
+
+</ol>
+
 </body>
 </html>
