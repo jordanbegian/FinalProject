@@ -8,7 +8,7 @@ import java.util.ArrayList;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StepRepository {
 
-    private ArrayList<Step> steps = new ArrayList();
+    private ArrayList<Step> steps = new ArrayList<>();
 
     @JsonProperty("steps")
     public ArrayList<Step> getSteps() {

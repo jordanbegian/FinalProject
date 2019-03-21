@@ -32,5 +32,13 @@
     <p th:text="${BusinessInformation.getName()}"></p>
     <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
 </div>
+
+
+<ol th:each="step : ${tripSteps}">
+    <li th:text="'START: Latitude: ' + ${step.getStartLocation().getLatitude()} + ' Longitude: ' + ${step.getStartLocation().getLongitude()}  "></li>
+    <li th:text="'END: Latitude: ' + ${step.getEndLocation().getLatitude()} + ' Longitude: ' + ${step.getEndLocation().getLongitude()}  "></li>
+
+</ol>
+
 </body>
 </html>
