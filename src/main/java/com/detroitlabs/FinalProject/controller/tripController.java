@@ -82,7 +82,7 @@ public class tripController {
 
         return "showtrip";
     }
-
+//putting in a comment
 //    @RequestMapping("/")
 //    @ResponseBody
 //    public String displayAllIssues(ModelMap modelMap){
