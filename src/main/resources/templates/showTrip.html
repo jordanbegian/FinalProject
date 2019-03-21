@@ -12,9 +12,25 @@
         th:src="@{'https://www.google.com/maps/embed/v1/directions?origin=' + ${tripStart} + '&destination=' + ${tripEnd} + '&key=' + ${googleMapsKey} + '&avoid=tolls|highways'}"
         allowfullscreen></iframe>
 
-<div th:each="BusinessInformation : ${businesses}">
+<h3>Bars</h3>
+<div th:each="BusinessInformation : ${barBusinesses}">
     <p th:text="${BusinessInformation.getName()}"></p>
-
+    <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
+</div>
+<h3>Restaurants</h3>
+<div th:each="BusinessInformation : ${restaurantBusinesses}">
+    <p th:text="${BusinessInformation.getName()}"></p>
+    <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
+</div>
+<h3>Hotels</h3>
+<div th:each="BusinessInformation : ${hotelBusinesses}">
+    <p th:text="${BusinessInformation.getName()}"></p>
+    <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
+</div>
+<h3>Entertainment</h3>
+<div th:each="BusinessInformation : ${entertainmentBusinesses}">
+    <p th:text="${BusinessInformation.getName()}"></p>
+    <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
 </div>
 </body>
 </html>

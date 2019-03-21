@@ -52,8 +52,17 @@ public class tripController {
        modelMap.put("tripStart", tripStart);
        modelMap.put("tripEnd", tripEnd);
 
-       Businesses businesses = yelpService.fetchYelpMostRatedBars(blankTrip.getEnd());
-       modelMap.put("businesses",businesses.getBusinesses());
+       Businesses barBusinesses = yelpService.fetchYelpMostRatedBars(blankTrip.getEnd());
+       modelMap.put("barBusinesses",barBusinesses.getBusinesses());
+
+       Businesses restaurantBusinesses = yelpService.fetchYelpMostRatedRestaurants(blankTrip.getEnd());
+       modelMap.put("restaurantBusinesses", restaurantBusinesses.getBusinesses());
+
+       Businesses hotelBusinesses = yelpService.fetchYelpMostRatedHotels(blankTrip.getEnd());
+       modelMap.put("hotelBusinesses", hotelBusinesses.getBusinesses());
+
+       Businesses entertainmentBusinesses = yelpService.fetchYelpMostRatedEntertainment(blankTrip.getEnd());
+       modelMap.put("entertainmentBusinesses", entertainmentBusinesses.getBusinesses());
 
        modelMap.put("googleMapsKey", googleMapsKey);
         return "showtrip";
