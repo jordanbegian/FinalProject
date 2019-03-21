@@ -8,15 +8,15 @@ import java.util.ArrayList;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DirectionSet {
 
-    private ArrayList<TripLeg> routes = new ArrayList();
+    private ArrayList<TripLegs> routes = new ArrayList();
 
     @JsonProperty("routes")
-    public ArrayList<TripLeg> getRoutes() {
+    public ArrayList<TripLegs> getRoutes() {
         return routes;
     }
 
     @JsonProperty("routes")
-    public void setRoutes(ArrayList<TripLeg> routes) {
+    public void setRoutes(ArrayList<TripLegs> routes) {
         this.routes = routes;
     }
 }
