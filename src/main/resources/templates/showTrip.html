@@ -14,23 +14,39 @@
 
 <h3>Bars</h3>
 <div th:each="BusinessInformation : ${barBusinesses}">
-    <p th:text="${BusinessInformation.getName()}"></p>
+    <p th:text="'Name: ' + ${BusinessInformation.getName()}"></p>
     <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
+    <p th:text="'Longitude: ' + ${BusinessInformation.getCoordinates().getLongitude()}"></p>
+    <p th:text="'Latitude: ' + ${BusinessInformation.getCoordinates().getLatitude()}"></p>
+    <p th:text="'Review Score: ' + ${BusinessInformation.getRating()}"></p>
+    <p th:text="'Review Score: ' + ${BusinessInformation.getReviewCount()}"></p>
 </div>
 <h3>Restaurants</h3>
 <div th:each="BusinessInformation : ${restaurantBusinesses}">
-    <p th:text="${BusinessInformation.getName()}"></p>
+    <p th:text="'Name: ' + ${BusinessInformation.getName()}"></p>
     <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
+    <p th:text="'Longitude: ' + ${BusinessInformation.getCoordinates().getLongitude()}"></p>
+    <p th:text="'Latitude: ' + ${BusinessInformation.getCoordinates().getLatitude()}"></p>
+    <p th:text="'Review Score: ' + ${BusinessInformation.getRating()}"></p>
+    <p th:text="'Review Score: ' + ${BusinessInformation.getReviewCount()}"></p>
 </div>
 <h3>Hotels</h3>
 <div th:each="BusinessInformation : ${hotelBusinesses}">
-    <p th:text="${BusinessInformation.getName()}"></p>
+    <p th:text="'Name: ' + ${BusinessInformation.getName()}"></p>
     <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
+    <p th:text="'Longitude: ' + ${BusinessInformation.getCoordinates().getLongitude()}"></p>
+    <p th:text="'Latitude: ' + ${BusinessInformation.getCoordinates().getLatitude()}"></p>
+    <p th:text="'Review Score: ' + ${BusinessInformation.getRating()}"></p>
+    <p th:text="'Number of Reviews: ' + ${BusinessInformation.getReviewCount()}"></p>
 </div>
 <h3>Entertainment</h3>
 <div th:each="BusinessInformation : ${entertainmentBusinesses}">
-    <p th:text="${BusinessInformation.getName()}"></p>
+    <p th:text="'Name: ' + ${BusinessInformation.getName()}"></p>
     <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
+    <p th:text="'Longitude: ' + ${BusinessInformation.getCoordinates().getLongitude()}"></p>
+    <p th:text="'Latitude: ' + ${BusinessInformation.getCoordinates().getLatitude()}"></p>
+    <p th:text="'Review Score: ' + ${BusinessInformation.getRating()}"></p>
+    <p th:text="'Number of Reviews: ' + ${BusinessInformation.getReviewCount()}"></p>
 </div>
 </body>
 </html>
