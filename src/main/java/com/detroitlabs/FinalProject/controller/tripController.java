@@ -76,6 +76,8 @@ public class tripController {
        DirectionSet directionSet =  directionsService.fetchDirectionSetForRoute(tripStart, tripEnd);
        ArrayList<Step> tripSteps = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps();
 
+
+
        modelMap.put("tripSteps", tripSteps);
 
        modelMap.put("googleMapsKey", googleMapsKey);
