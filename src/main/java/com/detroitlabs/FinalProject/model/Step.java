@@ -28,4 +28,6 @@ public class Step {
     public void setEndLocation(StepCoordinates endLocation) {
         this.endLocation = endLocation;
     }
+
+
 }

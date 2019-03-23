@@ -2,6 +2,7 @@ package com.detroitlabs.FinalProject.controller;
 
 import com.detroitlabs.FinalProject.model.*;
 import com.detroitlabs.FinalProject.service.DirectionsService;
+import com.detroitlabs.FinalProject.service.GeoCodingService;
 import com.detroitlabs.FinalProject.service.TripService;
 import com.detroitlabs.FinalProject.service.YelpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,13 @@ public class tripController {
     Stations stations;
 
     @Autowired
-    TripService tripService;
+    private TripService tripService;
 
     @Autowired
-    DirectionsService directionsService;
+    private GeoCodingService geoCodingService;
+
+    @Autowired
+   private DirectionsService directionsService;
 
     @Autowired
     StationsWrapper stationsWrapper;
@@ -76,14 +80,36 @@ public class tripController {
        DirectionSet directionSet =  directionsService.fetchDirectionSetForRoute(tripStart, tripEnd);
        ArrayList<Step> tripSteps = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps();
 
-
+       ArrayList<String> cityNames = getCityNamesByStepCoordinates(tripSteps);
 
        modelMap.put("tripSteps", tripSteps);
-
+       modelMap.put("allCityNames", cityNames);
        modelMap.put("googleMapsKey", googleMapsKey);
 
         return "showtrip";
     }
+
+
+
+    private ArrayList<String> getCityNamesByStepCoordinates(ArrayList<Step> tripSteps){
+
+        ArrayList<String> allCities = new ArrayList<>();
+
+        for(Step step: tripSteps){
+
+           String latAndLong = step.getStartLocation().getFormattedLatAndLong();
+
+           GeoLocationCityInfo cityRawJSONInfo = geoCodingService.fetchCityInfoByCoordinate(latAndLong);
+
+           String cityName = cityRawJSONInfo.getPlusCode().parseCityNameFromCode();
+
+           allCities.add(cityName);
+        }
+
+        return allCities;
+    }
+
+
 //putting in a comment
 //    @RequestMapping("/")
 //    @ResponseBody

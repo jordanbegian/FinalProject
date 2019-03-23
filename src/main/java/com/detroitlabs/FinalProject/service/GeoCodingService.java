@@ -13,14 +13,12 @@ public class GeoCodingService {
     @Value("${GOOGLE_MAPS_KEY}")
     private String googleMapsKey;
 
-    public GeoLocationCityInfo fetchCityInfoByCoordinate(StepCoordinates coordinates) {
+    public GeoLocationCityInfo fetchCityInfoByCoordinate(String formattedCoordinates) {
 
-       Double longitude = coordinates.getLongitude();
-       Double latitude = coordinates.getLatitude();
 
         RestTemplate restTemplate = new RestTemplate();
 
-        String googleDirectionsRequest = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&key=" + googleMapsKey;
+        String googleDirectionsRequest = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + formattedCoordinates + "&key=" + googleMapsKey;
         return restTemplate.getForObject(googleDirectionsRequest, GeoLocationCityInfo.class);
 
     }
