@@ -3,17 +3,18 @@ package com.detroitlabs.FinalProject.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "User")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
 
-    private String name;
+    private String username;
 
     public User(String name){
-        this.name = name;
+        this.username = name;
     }
 
     public Integer getId() {
@@ -25,10 +26,10 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
 }
