@@ -9,55 +9,30 @@
 <p th:text="'Trip End: ' + ${tripEnd}">trip End</p>
 
 <iframe width="600" height="450" frameborder="0" style="border:0"
-        th:src="@{'https://www.google.com/maps/embed/v1/directions?origin=' + ${tripStart} + '&destination=' + ${tripEnd} + '&key=' + ${googleMapsKey} + '&avoid=tolls|highways'}"
+        th:src="@{'https://www.google.com/maps/embed/v1/directions?origin=' + ${tripStart} + '&destination='
+        + ${tripEnd} + '&key=' + ${googleMapsKey} + '&avoid=tolls|highways'}"
         allowfullscreen></iframe>
 
-<h3>Bars</h3>
-<div th:each="BusinessInformation : ${barBusinesses}">
-    <p th:text="'Name: ' + ${BusinessInformation.getName()}"></p>
-    <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
-    <p th:text="'Longitude: ' + ${BusinessInformation.getCoordinates().getLongitude()}"></p>
-    <p th:text="'Latitude: ' + ${BusinessInformation.getCoordinates().getLatitude()}"></p>
-    <p th:text="'Review Score: ' + ${BusinessInformation.getRating()}"></p>
-    <p th:text="'Review Score: ' + ${BusinessInformation.getReviewCount()}"></p>
-</div>
-<h3>Restaurants</h3>
-<div th:each="BusinessInformation : ${restaurantBusinesses}">
-    <p th:text="'Name: ' + ${BusinessInformation.getName()}"></p>
-    <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
-    <p th:text="'Longitude: ' + ${BusinessInformation.getCoordinates().getLongitude()}"></p>
-    <p th:text="'Latitude: ' + ${BusinessInformation.getCoordinates().getLatitude()}"></p>
-    <p th:text="'Review Score: ' + ${BusinessInformation.getRating()}"></p>
-    <p th:text="'Review Score: ' + ${BusinessInformation.getReviewCount()}"></p>
-</div>
-<h3>Hotels</h3>
-<div th:each="BusinessInformation : ${hotelBusinesses}">
-    <p th:text="'Name: ' + ${BusinessInformation.getName()}"></p>
-    <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
-    <p th:text="'Longitude: ' + ${BusinessInformation.getCoordinates().getLongitude()}"></p>
-    <p th:text="'Latitude: ' + ${BusinessInformation.getCoordinates().getLatitude()}"></p>
-    <p th:text="'Review Score: ' + ${BusinessInformation.getRating()}"></p>
-    <p th:text="'Number of Reviews: ' + ${BusinessInformation.getReviewCount()}"></p>
-</div>
-<h3>Entertainment</h3>
-<div th:each="BusinessInformation : ${entertainmentBusinesses}">
-    <p th:text="'Name: ' + ${BusinessInformation.getName()}"></p>
-    <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
-    <p th:text="'Longitude: ' + ${BusinessInformation.getCoordinates().getLongitude()}"></p>
-    <p th:text="'Latitude: ' + ${BusinessInformation.getCoordinates().getLatitude()}"></p>
-    <p th:text="'Review Score: ' + ${BusinessInformation.getRating()}"></p>
-    <p th:text="'Number of Reviews: ' + ${BusinessInformation.getReviewCount()}"></p>
-</div>
 
-
-<ol th:each="step : ${tripSteps}">
-    <li th:text="'START: Latitude: ' + ${step.getStartLocation().getLatitude()} + ' Longitude: ' + ${step.getStartLocation().getLongitude()}  "></li>
-    <li th:text="'END: Latitude: ' + ${step.getEndLocation().getLatitude()} + ' Longitude: ' + ${step.getEndLocation().getLongitude()}  "></li>
-</ol>
-
-<ul th:each="cityName : ${filteredCityNames}">
-    <li th:text="${cityName}"></li>
-</ul>
+<div th:each="cityPlaces : ${tripCityPlaces}">
+    <h1 th:text="${cityPlaces.getCityName()}"></h1>
+    <h3>Bars</h3>
+    <ul th:each="bar : ${cityPlaces.getBars().getBusinesses()}">
+        <li th:text="${bar.getName()}"></li>
+    </ul>
+    <h3>Restaurants</h3>
+    <ul th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}">
+        <li th:text="${restaurant.getName()}"></li>
+    </ul>
+    <h3>Hotels</h3>
+    <ul th:each="hotel : ${cityPlaces.getHotels().getBusinesses()}">
+        <li th:text="${hotel.getName()}"></li>
+    </ul>
+    <h3>Entertainment</h3>
+    <ul th:each="entertainment : ${cityPlaces.getEntertainment().getBusinesses()}">
+        <li th:text="${entertainment.getName()}"></li>
+    </ul>
+</div>
 
 </body>
 </html>
