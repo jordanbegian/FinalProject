@@ -25,4 +25,8 @@ public class StepCoordinates {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
+    public String getFormattedLatAndLong(){
+        return String.valueOf(getLatitude()) + "," + String.valueOf(getLongitude());
+    }
 }
