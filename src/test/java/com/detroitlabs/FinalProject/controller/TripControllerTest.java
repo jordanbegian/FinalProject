@@ -1,4 +1,4 @@
-package com.detroitlabs.FinalProject.model;
+package com.detroitlabs.FinalProject.controller;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,13 +9,13 @@ import java.util.Arrays;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 
-public class CoordinatesHandlerTest {
+public class TripControllerTest {
 
-    private CoordinatesHandler coordinatesHandler;
+    private TripController tripController;
 
     @Before
     public void create(){
-        coordinatesHandler = new CoordinatesHandler();
+        tripController = new TripController();
     }
 
     @Test
@@ -23,7 +23,7 @@ public class CoordinatesHandlerTest {
         ArrayList<String> testCities = new ArrayList<>(Arrays.asList("Detroit", "Detroit", "Dearborn", "Dearborn",
                 "Taylor", "Flatrock", "Flatrock", "Flatrock"));
 
-        ArrayList<String> testFilteredCities = coordinatesHandler.filterDuplicateCities(testCities);
+        ArrayList<String> testFilteredCities = tripController.filterDuplicateCities(testCities);
 
         String resultIndex0 = testFilteredCities.get(0);
         String resultIndex1 = testFilteredCities.get(1);

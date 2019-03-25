@@ -19,19 +19,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class tripController {
+public class TripController {
 
     @Autowired
-    Businesses businesses;
+    private Businesses businesses;
 
     @Autowired
-    BusinessInformation businessInformation;
+    private BusinessInformation businessInformation;
 
     @Autowired
-    YelpService yelpService;
+    private YelpService yelpService;
 
     @Autowired
-    Stations stations;
+    private Stations stations;
 
     @Autowired
     private TripService tripService;
@@ -82,11 +82,27 @@ public class tripController {
 
        ArrayList<String> cityNames = getCityNamesByStepCoordinates(tripSteps);
 
+       ArrayList<String> filteredCityNames = filterDuplicateCities(cityNames);
+
        modelMap.put("tripSteps", tripSteps);
        modelMap.put("allCityNames", cityNames);
+       modelMap.put("filteredCityNames",filteredCityNames);
        modelMap.put("googleMapsKey", googleMapsKey);
 
         return "showtrip";
+    }
+
+    public ArrayList<String> filterDuplicateCities(ArrayList<String> cities){
+
+        ArrayList<String> filteredCities = new ArrayList<>();
+
+        for (String city : cities){
+            if (!filteredCities.contains(city)){
+                filteredCities.add(city);
+            }
+        }
+
+        return filteredCities;
     }
 
 
