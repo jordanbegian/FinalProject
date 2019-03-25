@@ -29,6 +29,7 @@ public class PlusCode {
 
         splitCode.remove(0);
 
-       return splitCode.toString().replaceAll(",,", ",");
+       return splitCode.toString().replaceAll(",,", ",").replaceAll("\\[", "").replaceAll("\\]","");
+
     }
 }
