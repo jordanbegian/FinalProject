@@ -84,12 +84,25 @@ public class TripController {
 
        ArrayList<String> filteredCityNames = filterDuplicateCities(cityNames);
 
+       TripCityPlaces tripCityPlaces = generateTripCityPlaces(filteredCityNames, yelpService);
+
        modelMap.put("tripSteps", tripSteps);
        modelMap.put("allCityNames", cityNames);
        modelMap.put("filteredCityNames",filteredCityNames);
+       modelMap.put("tripCityPlaces", tripCityPlaces.getTripCityPlaces());
        modelMap.put("googleMapsKey", googleMapsKey);
 
         return "showtrip";
+    }
+
+    public TripCityPlaces generateTripCityPlaces(ArrayList<String> filteredCities, YelpService yelpService){
+        TripCityPlaces tripCityPlaces = new TripCityPlaces();
+
+        for (String cityName : filteredCities){
+            tripCityPlaces.addTripCityPlace(new CityPlaces(cityName,yelpService));
+        }
+
+        return tripCityPlaces;
     }
 
     public ArrayList<String> filterDuplicateCities(ArrayList<String> cities){
