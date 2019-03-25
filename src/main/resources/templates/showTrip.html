@@ -55,7 +55,7 @@
     <li th:text="'END: Latitude: ' + ${step.getEndLocation().getLatitude()} + ' Longitude: ' + ${step.getEndLocation().getLongitude()}  "></li>
 </ol>
 
-<ul th:each="cityName : ${allCityNames}">
+<ul th:each="cityName : ${filteredCityNames}">
     <li th:text="${cityName}"></li>
 </ul>
 
