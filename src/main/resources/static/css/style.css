@@ -7592,7 +7592,7 @@ h1, h2, h3, h4, h5,
       color: #000; }
 
 .ftco-section-search {
-  background: #bb945d; }
+  background: #ffb75f; }
 
 @media (min-width: 768px) {
   .tabulation-search {
@@ -7624,7 +7624,7 @@ h1, h2, h3, h4, h5,
   right: 0;
   margin-right: -50px;
   border-radius: 50%;
-  background: #bb945d;
+  background: #ffb75f;
   z-index: 1;
   top: 50%;
   -webkit-transform: translateY(-50%);
