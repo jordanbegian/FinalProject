@@ -13,26 +13,43 @@
         <div class="col-sm">
             <p th:text="'Trip Start: ' + ${tripStart}">trip start</p>
             <p th:text="'Trip End: ' + ${tripEnd}">trip End</p>
-        <!-----------CITY PLACES----------->
-            <div th:each="cityPlaces : ${tripCityPlaces}">
-                <h1 th:text="${cityPlaces.getCityName()}"></h1>
-                <h3>Bars</h3>
-                <ul th:each="bar : ${cityPlaces.getBars().getBusinesses()}">
-                    <li th:text="${bar.getName()}"></li>
-                </ul>
-                <h3>Restaurants</h3>
-                <ul th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}">
-                    <li th:text="${restaurant.getName()}"></li>
-                </ul>
-                <h3>Hotels</h3>
-                <ul th:each="hotel : ${cityPlaces.getHotels().getBusinesses()}">
-                    <li th:text="${hotel.getName()}"></li>
-                </ul>
-                <h3>Entertainment</h3>
-                <ul th:each="entertainment : ${cityPlaces.getEntertainment().getBusinesses()}">
-                    <li th:text="${entertainment.getName()}"></li>
-                </ul>
+    <!-----------ACCORDION START----------->
+            <div id="accordion">
+                <div class="card" th:each="cityPlaces, iStat : ${tripCityPlaces}">
+                    <div class="card-header" th:id="'heading_'+${iStat.index}">
+                        <h5 class="mb-0">
+            <!-----------CITY NAME BUTTON START----------->
+                            <button class="btn btn-link" data-toggle="collapse" th:attr="data-target='#collapse_'+${iStat.index}, aria-controls='collapse_'+${iStat.index}"
+                                    aria-expanded="false" th:text="${cityPlaces.getCityName()}"></button>
+            <!-----------CITY NAME BUTTON END----------->
+                        </h5>
+                    </div>
+
+                    <div th:id="'collapse_'+${iStat.index}" class="collapse" th:attr="aria-labelledby='heading_'+${iStat.index}" data-parent="#accordion">
+            <!-----------CARD BODY START----------->
+                        <div class="card-body">
+                            <h3>Bars</h3>
+                            <ul th:each="bar : ${cityPlaces.getBars().getBusinesses()}">
+                                <li th:text="${bar.getName()}"></li>
+                            </ul>
+                            <h3>Restaurants</h3>
+                            <ul th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}">
+                                <li th:text="${restaurant.getName()}"></li>
+                            </ul>
+                            <h3>Hotels</h3>
+                            <ul th:each="hotel : ${cityPlaces.getHotels().getBusinesses()}">
+                                <li th:text="${hotel.getName()}"></li>
+                            </ul>
+                            <h3>Entertainment</h3>
+                            <ul th:each="entertainment : ${cityPlaces.getEntertainment().getBusinesses()}">
+                                <li th:text="${entertainment.getName()}"></li>
+                            </ul>
+                        </div>
+            <!-----------CARD BODY END----------->
+                    </div>
+                </div>
             </div>
+    <!-----------ACCORDION END----------->
         </div>
 <!-----------COLUMN 2----------->
         <div class="col-sm">
@@ -44,7 +61,7 @@
         </div>
 <!-----------COLUMN 3----------->
         <div class="col-sm">
-            One of three columns
+            <h1>Your Trip</h1>
         </div>
     </div>
 </div>
