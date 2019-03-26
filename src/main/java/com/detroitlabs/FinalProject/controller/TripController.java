@@ -99,6 +99,11 @@ public class TripController {
 
        //Gas Station Info
 
+        double gaslongitude = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps().get(0).getEndLocation().getLongitude();
+       double gaslatitude = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps().get(0).getEndLocation().getLatitude();
+
+       StationsWrapper stationsWrapper = tripService.DisplayAllGasStation(gaslongitude, gaslatitude);
+      modelMap.put("stationsWrapper", stationsWrapper.getStations());
 
 
         return "showtrip";
