@@ -54,6 +54,11 @@ public class TripController {
         return "bootstrapHome";
     }
 
+    @RequestMapping("/index")
+    public String testPage(){
+        return "index";
+    }
+
     @RequestMapping("/showtrip")
     public String displayTripPage(@ModelAttribute BlankTrip blankTrip, ModelMap modelMap){
        String tripStart = blankTrip.getStart();
