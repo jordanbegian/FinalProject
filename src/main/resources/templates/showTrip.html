@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Trip</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 
@@ -13,26 +14,81 @@
         <div class="col-sm">
             <p th:text="'Trip Start: ' + ${tripStart}">trip start</p>
             <p th:text="'Trip End: ' + ${tripEnd}">trip End</p>
-        <!-----------CITY PLACES----------->
-            <div th:each="cityPlaces : ${tripCityPlaces}">
-                <h1 th:text="${cityPlaces.getCityName()}"></h1>
-                <h3>Bars</h3>
-                <ul th:each="bar : ${cityPlaces.getBars().getBusinesses()}">
-                    <li th:text="${bar.getName()}"></li>
-                </ul>
-                <h3>Restaurants</h3>
-                <ul th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}">
-                    <li th:text="${restaurant.getName()}"></li>
-                </ul>
-                <h3>Hotels</h3>
-                <ul th:each="hotel : ${cityPlaces.getHotels().getBusinesses()}">
-                    <li th:text="${hotel.getName()}"></li>
-                </ul>
-                <h3>Entertainment</h3>
-                <ul th:each="entertainment : ${cityPlaces.getEntertainment().getBusinesses()}">
-                    <li th:text="${entertainment.getName()}"></li>
-                </ul>
+    <!-----------ACCORDION START----------->
+            <div id="accordion">
+                <div class="card" th:each="cityPlaces, iStat : ${tripCityPlaces}">
+                    <div class="card-header" th:id="'heading_'+${iStat.index}">
+                        <h5 class="mb-0">
+            <!-----------CITY NAME BUTTON START----------->
+                            <button class="btn btn-link" data-toggle="collapse"
+                                    th:attr="data-target='#collapse_'+${iStat.index}, aria-controls='collapse_'+${iStat.index}"
+                                    aria-expanded="false" th:text="${cityPlaces.getCityName()}"></button>
+            <!-----------CITY NAME BUTTON END----------->
+                        </h5>
+                    </div>
+
+                    <div th:id="'collapse_'+${iStat.index}" class="collapse"
+                         th:attr="aria-labelledby='heading_'+${iStat.index}" data-parent="#accordion">
+            <!-----------CARD BODY START----------->
+                        <div class="card-body">
+                            <nav>
+                <!-----------TABS START----------->
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" th:id="'nav-restaurants-tab-'+${iStat.index}"
+                                   data-toggle="tab" th:href="'#nav-restaurants-'+${iStat.index}"
+                                   role="tab" th:attr="aria-controls='nav-restaurants-'+${iStat.index}"
+                                   aria-selected="true">Restaurants</a>
+                                <a class="nav-item nav-link" th:id="'nav-bars-tab-'+${iStat.index}"
+                                   data-toggle="tab" th:href="'#nav-bars-'+${iStat.index}"
+                                   role="tab" th:attr="aria-controls='nav-bars-'+${iStat.index}"
+                                   aria-selected="false">Bars</a>
+                                <a class="nav-item nav-link" th:id="'nav-hotels-tab-'+${iStat.index}"
+                                   data-toggle="tab" th:href="'#nav-hotels-'+${iStat.index}"
+                                   role="tab" th:attr="aria-controls='nav-hotels-'+${iStat.index}"
+                                   aria-selected="false">Hotels</a>
+                                <a class="nav-item nav-link" th:id="'nav-entertainment-tab-'+${iStat.index}"
+                                   data-toggle="tab" th:href="'#nav-entertainment-'+${iStat.index}"
+                                   role="tab" th:attr="aria-controls='nav-entertainment-'+${iStat.index}"
+                                   aria-selected="false">Entertainment</a>
+                            </div>
+                <!----------TABS END----------->
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" th:id="'nav-restaurants-'+${iStat.index}"
+                                 role="tabpanel" th:attr="aria-labelledby='nav-restaurants-tab-'+${iStat.index}">
+                    <!-----------RESTAURANT INFO----------->
+                                <ul th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}">
+                                    <li th:text="${restaurant.getName()}"></li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane fade" th:id="'nav-bars-'+${iStat.index}"
+                                 role="tabpanel" th:attr="aria-labelledby='nav-bars-tab-'+${iStat.index}">
+                    <!-----------BAR INFO----------->
+                                <ul th:each="bar : ${cityPlaces.getBars().getBusinesses()}">
+                                    <li th:text="${bar.getName()}"></li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane fade" th:id="'nav-hotels-'+${iStat.index}"
+                                 role="tabpanel" th:attr="aria-labelledby='nav-hotels-tab-'+${iStat.index}">
+                    <!-----------HOTEL INFO----------->
+                                <ul th:each="hotel : ${cityPlaces.getHotels().getBusinesses()}">
+                                    <li th:text="${hotel.getName()}"></li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane fade" th:id="'nav-entertainment-'+${iStat.index}"
+                                 role="tabpanel" th:attr="aria-labelledby='nav-entertainment-tab-'+${iStat.index}">
+                    <!-----------ENTERTAINMENT INFO----------->
+                                <ul th:each="entertainment : ${cityPlaces.getEntertainment().getBusinesses()}">
+                                    <li th:text="${entertainment.getName()}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        </div>
+            <!-----------CARD BODY END----------->
+                    </div>
+                </div>
             </div>
+    <!-----------ACCORDION END----------->
         </div>
 <!-----------COLUMN 2----------->
         <div class="col-sm">
@@ -44,13 +100,17 @@
         </div>
 <!-----------COLUMN 3----------->
         <div class="col-sm">
-            One of three columns
+            <h1>Your Trip</h1>
         </div>
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </body>
 </html>
