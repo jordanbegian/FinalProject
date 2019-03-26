@@ -10,15 +10,15 @@ import java.util.List;
 @Component
 public class StationsWrapper {
 
-    private List<Stations> stations;
+    private List<StationsContents> stations;
 
     @JsonProperty("stations")
-    public List<Stations> getStations() {
+    public List<StationsContents> getStations() {
         return stations;
     }
 
     @JsonProperty("stations")
-    public void setStations(List<Stations> stations) {
+    public void setStations(List<StationsContents> stations) {
         this.stations = stations;
     }
 
