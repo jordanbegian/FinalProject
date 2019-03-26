@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
   <head>
     <title>Voyage - Free Bootstrap 4 Template by Colorlib</title>
     <meta charset="utf-8">
@@ -51,7 +51,7 @@
     <!-- END nav -->
     
     <section class="home-slider owl-carousel">
-      <div class="slider-item" style="background-image: url('static/images/RoadTrip1');">
+      <div class="slider-item" style="background-image: url('images/RoadTrip1.jpeg');">
         <div class="overlay"></div>
         <div class="container">
           <div class="row slider-text align-items-center">
@@ -62,7 +62,7 @@
         </div>
       </div>
 
-      <div class="slider-item" style="background-image: url('images/bg_1.jpg');">
+      <div class="slider-item" style="background-image: url('images/RoadTrip2.jpeg');">
         <div class="overlay"></div>
         <div class="container">
           <div class="row slider-text align-items-center">
@@ -73,7 +73,7 @@
         </div>
       </div>
 
-      <div class="slider-item" style="background-image: url('images/bg_3.jpg');">
+      <div class="slider-item" style="background-image: url('images/RoadTip3.jpeg');">
         <div class="overlay"></div>
         <div class="container">
           <div class="row slider-text align-items-center">
@@ -92,117 +92,35 @@
           <div class="col-md-12 tabulation-search">
             <div class="element-animate">
               <div class="nav nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link p-3 active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><span>01</span> Flight</a>
-                <a class="nav-link p-3" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"><span>02</span> Hotel</a>
-                <a class="nav-link p-3" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"><span>03</span> Car Rent</a>
-                <a class="nav-link p-3" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"><span>04</span> Cruises</a>
+                <a class="nav-link p-3" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"><span></span>My Trip</a>
               </div>
             </div>
-              
-            <div class="tab-content py-5" id="v-pills-tabContent">
-              <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                <div class="block-17">
-                  <form action="" method="post" class="d-block d-lg-flex">
-                    <div class="fields d-block d-lg-flex">
 
-                      <div class="textfield-search one-third"><input type="text" class="form-control" placeholder="Search Location"></div>
+              <div class="container">
 
-                      <div class="check-in one-third"><input type="text" id="checkin_date" class="form-control" placeholder="Check-in date"></div>
+                  <div class="margin-tb-45px full-width">
+                      <h4 class="padding-lr-30px padding-tb-20px background-white box-shadow border-radius-10"><i
+                              class="far fa-list-alt margin-right-10px text-main-color"></i>Basic Trip Information</h4>
+                      <div class="padding-30px padding-bottom-30px background-white border-radius-10">
+                          <form th:action="@{/showtrip}" th:object="${blankTrip}" method="post">
+                              <div class="form-group margin-bottom-20px">
+                                  <label><i class="far fa-list-alt margin-right-10px"></i> Trip Starting Point</label>
+                                  <input th:name="tripStart" th:field="*{start}" type="text" class="form-control form-control-sm"
+                                         id="tripStartingPoint" placeholder="Trip Start Location">
+                              </div>
+                              <div class="form-group margin-bottom-20px">
+                                  <label><i class="far fa-list-alt margin-right-10px"></i> Trip Ending Point</label>
+                                  <input th:name="tripEnd" th:field="*{end}" type="text" class="form-control form-control-sm"
+                                         id="tripEndingPoint" placeholder="Trip Ending Point">
+                              </div>
+                              <button type="submit">Submit</button>
 
-                      <div class="check-out one-third"><input type="text" id="checkout_date" class="form-control" placeholder="Check-out date"></div>
-                      <div class="select-wrap one-third">
-                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                        <select name="" id="" class="form-control">
-                          <option value="">Guest</option>
-                          <option value="">1</option>
-                          <option value="">2</option>
-                          <option value="">3</option>
-                          <option value="">4+</option>
-                        </select>
+                          </form>
+
                       </div>
-                    </div>
-                    <input type="submit" class="search-submit btn btn-primary" value="Find Flights">  
-                  </form>
-                </div>
+                  </div>
+
               </div>
-              <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                <div class="block-17">
-                  <form action="" method="post" class="d-block d-lg-flex">
-                    <div class="fields d-block d-lg-flex">
-                      <div class="textfield-search one-third"><input type="text" class="form-control" placeholder="Search Hotel"></div>
-
-                      <div class="check-in one-third"><input type="text" id="checkin_date" class="form-control" placeholder="Check-in date"></div>
-
-                      <div class="check-out one-third"><input type="text" id="checkout_date" class="form-control" placeholder="Check-out date"></div>
-                      <div class="select-wrap one-third">
-                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                        <select name="" id="" class="form-control">
-                          <option value="">Guest</option>
-                          <option value="">1</option>
-                          <option value="">2</option>
-                          <option value="">3</option>
-                          <option value="">4+</option>
-                        </select>
-                      </div>
-                    </div>
-                    <input type="submit" class="search-submit btn btn-primary" value="Find Hotels">  
-                  </form>
-                </div>
-              </div>
-              <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                <div class="block-17">
-                  <form action="" method="post" class="d-block d-lg-flex">
-                    <div class="fields d-block d-lg-flex">
-                      <div class="textfield-search one-third"><input type="text" class="form-control" placeholder="Search Location"></div>
-
-                      <div class="check-in one-third"><input type="text" id="start_date" class="form-control" placeholder="Start date"></div>
-
-                      <div class="check-out one-third"><input type="text" id="return_date" class="form-control" placeholder="Return date"></div>
-                      <div class="select-wrap one-third">
-                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                        <select name="" id="" class="form-control">
-                          <option value="">Guest</option>
-                          <option value="">1</option>
-                          <option value="">2</option>
-                          <option value="">3</option>
-                          <option value="">4+</option>
-                        </select>
-                      </div>
-                    </div>
-                    <input type="submit" class="search-submit btn btn-primary" value="Find Car">  
-                  </form>
-                </div>
-              </div>
-              <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                <div class="block-17">
-                  <form action="" method="post" class="d-block d-lg-flex">
-                    <div class="fields d-block d-lg-flex">
-                      <div class="textfield-search one-third one-third-1"><input type="text" class="form-control" placeholder="Search Location"></div>
-
-
-                      <div class="check-out one-third one-third-1"><input type="text" id="start_date" class="form-control" placeholder="Check-out date"></div>
-
-                      <div class="select-wrap one-third one-third-1">
-                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                        <select name="" id="" class="form-control">
-                          <option value="">Categories</option>
-                          <option value="">Suite</option>
-                          <option value="">Super Deluxe</option>
-                          <option value="">Balcony</option>
-                          <option value="">Economy</option>
-                          <option value="">Luxury</option>
-                        </select>
-                      </div>
-                    </div>
-                    <input type="submit" class="search-submit btn btn-primary" value="Find Cruise">  
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!--<section class="ftco-section-2">-->
       <!--<div class="container-fluid d-flex">-->
@@ -738,6 +656,9 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     
   </body>
 </html>

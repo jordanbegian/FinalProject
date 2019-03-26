@@ -51,13 +51,13 @@ public class TripController {
     @RequestMapping("/")
     public String displayHomePage(Model model){
         model.addAttribute("blankTrip", new BlankTrip());
-        return "bootstrapHome";
-    }
-
-    @RequestMapping("/index")
-    public String testPage(){
         return "index";
     }
+
+//    @RequestMapping("/index")
+//    public String testPage(){
+//        return "index";
+//    }
 
     @RequestMapping("/showtrip")
     public String displayTripPage(@ModelAttribute BlankTrip blankTrip, ModelMap modelMap){
