@@ -3272,7 +3272,7 @@ input[type="button"].btn-block {
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
   margin-right: 1rem;
-  font-size: 1.25rem;
+  font-size: 1.95rem;
   line-height: inherit;
   white-space: nowrap; }
   .navbar-brand:hover, .navbar-brand:focus {
@@ -7592,7 +7592,7 @@ h1, h2, h3, h4, h5,
       color: #000; }
 
 .ftco-section-search {
-  background: #ff5f5f; }
+  background: #bb945d; }
 
 @media (min-width: 768px) {
   .tabulation-search {
@@ -7607,7 +7607,7 @@ h1, h2, h3, h4, h5,
   margin-bottom: 0;
   background: white; }
   .tabulation-search .nav-pills .nav-link.active {
-    background: #ff5f5f; }
+    background: #bb945d; }
     @media (min-width: 768px) {
       .tabulation-search .nav-pills .nav-link.active {
         margin-top: -10px; } }
@@ -7624,7 +7624,7 @@ h1, h2, h3, h4, h5,
   right: 0;
   margin-right: -50px;
   border-radius: 50%;
-  background: #ff5f5f;
+  background: #bb945d;
   z-index: 1;
   top: 50%;
   -webkit-transform: translateY(-50%);
