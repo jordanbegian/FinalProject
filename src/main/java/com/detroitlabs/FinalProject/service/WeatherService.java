@@ -1,5 +1,6 @@
 package com.detroitlabs.FinalProject.service;
 
+import com.detroitlabs.FinalProject.model.Forecast;
 import com.detroitlabs.FinalProject.model.StationsWrapper;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -9,15 +10,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class TripService {
+public class WeatherService {
 
-    public StationsWrapper DisplayAllGasStation(double gaslongitude, double gaslatitude){
+
+    public Forecast fetchWeatherData(double gaslongitude, double gaslatitude) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "spring");
         HttpEntity entity = new HttpEntity(headers);
-        String fetchAllIssues = "http://api.mygasfeed.com/stations/radius/" + gaslatitude + "/" + gaslongitude + "/1/reg/Distance/aww3vx3d8t.json";
-        ResponseEntity<StationsWrapper> response = restTemplate.exchange(fetchAllIssues, HttpMethod.GET, entity, StationsWrapper.class);
+        String fetchAllIssues = "api.openweathermap.org/data/2.5/forecast?lat=" + gaslatitude + "&lon=" + gaslongitude + "&APPID=3397e242f4c306e5875092fcba62cebc";
+        ResponseEntity<Forecast> response = restTemplate.exchange(fetchAllIssues, HttpMethod.GET, entity, Forecast.class);
         return response.getBody();
     }
 }

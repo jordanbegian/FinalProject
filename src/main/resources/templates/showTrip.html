@@ -112,5 +112,21 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+
+<!--<h3>Gas</h3>-->
+<!--<div th:each="weatherData : ${mainWeatherData}">-->
+    <!--<h1 th:text="${weatherData.getTemp())}"></h1>-->
+<!--</div>-->
+
+<div th:each="cityPlaces : ${tripCityPlaces}">
+    <h1 th:text="${cityPlaces.getCityName()}"></h1>
+    <ul th:each="station : ${locationStations}">
+        <li th:text="${station.getStation()}"></li>
+        <li th:text="${station.getAddress()}"></li>
+        <li th:text="${station.getDistance()}"></li>
+    </ul>
+</div>
+
+
 </body>
 </html>
