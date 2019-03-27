@@ -1,10 +1,7 @@
 package com.detroitlabs.FinalProject.controller;
 
 import com.detroitlabs.FinalProject.model.*;
-import com.detroitlabs.FinalProject.service.DirectionsService;
-import com.detroitlabs.FinalProject.service.GeoCodingService;
-import com.detroitlabs.FinalProject.service.TripService;
-import com.detroitlabs.FinalProject.service.YelpService;
+import com.detroitlabs.FinalProject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class TripController {
@@ -27,8 +25,6 @@ public class TripController {
     @Autowired
     private YelpService yelpService;
 
-    @Autowired
-    private StationsContents stationsContents;
 
     @Autowired
     private TripService tripService;
@@ -43,7 +39,10 @@ public class TripController {
     StationsWrapper stationsWrapper;
 
     @Autowired
-   Stations stations;
+    Station station;
+
+    @Autowired
+    WeatherService weatherService;
 
     @Value("${GOOGLE_MAPS_KEY}")
     private String googleMapsKey;
@@ -60,7 +59,7 @@ public class TripController {
 //    }
 
     @RequestMapping("/showtrip")
-    public String displayTripPage(@ModelAttribute BlankTrip blankTrip, ModelMap modelMap){
+    public String displayTripPage(@ModelAttribute StepCoordinates gaslongitude, @ModelAttribute StepCoordinates gaslatitude, @ModelAttribute BlankTrip blankTrip, ModelMap modelMap){
        String tripStart = blankTrip.getStart();
        String tripEnd = blankTrip.getEnd();
        modelMap.put("tripStart", tripStart);
@@ -99,11 +98,18 @@ public class TripController {
 
        //Gas Station Info
 
-        double gaslongitude = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps().get(0).getEndLocation().getLongitude();
-       double gaslatitude = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps().get(0).getEndLocation().getLatitude();
+        gaslongitude = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps().get(0).getEndLocation();
+       gaslatitude = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps().get(0).getEndLocation();
 
-       StationsWrapper stationsWrapper = tripService.DisplayAllGasStation(gaslongitude, gaslatitude);
-      modelMap.put("stationsWrapper", stationsWrapper.getStations());
+       StationsWrapper stationsWrapper = tripService.DisplayAllGasStation(gaslongitude.getLongitude(), gaslatitude.getLatitude());
+        List<Station> locationStations = stationsWrapper.getStations();
+      modelMap.put("locationStations", locationStations);
+
+      //Weather Info
+
+//        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
+//        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
+//        modelMap.put("mainWeatherData", mainWeatherData);
 
 
         return "showtrip";
@@ -158,7 +164,7 @@ public class TripController {
 //    @ResponseBody
 //    public String displayAllIssues(ModelMap modelMap){
 //        StationsWrapper stationsWrapper = tripService.DisplayAllGasStation();
-//      List<Stations> allGasStations = stationsWrapper.getStations();
+//      WeatherData<Stations> allGasStations = stationsWrapper.getStations();
 //        modelMap.put("allGasStations", allGasStations);
 //        return allGasStations.toString();
 //    }

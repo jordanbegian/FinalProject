@@ -68,7 +68,7 @@
         </div>
       </div>
 
-      <div class="slider-item" style="background-image: url('static/images/RoadTip3.jpeg');">
+      <div class="slider-item" style="background-image: url('images/RoadTip3.jpeg');">
         <div class="overlay"></div>
         <div class="container">
           <div class="row slider-text align-items-center">
@@ -78,6 +78,15 @@
         </div>
       </div>
     </section>
+    <div class="slider-item" style="background-image: url('images/RoadTip3.jpeg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row slider-text align-items-center">
+                <div class="col-md-7 col-sm-12 ftco-animate">
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- END slider -->
 
     <div class="ftco-section-search">
@@ -94,16 +103,16 @@
 
                   <div class="margin-tb-45px full-width">
                       <h4 class="padding-lr-30px padding-tb-20px background-white box-shadow border-radius-10"><i
-                              class="far fa-list-alt margin-right-10px text-main-color"></i>Basic Trip Information</h4>
+                              class="far fa-weatherData-alt margin-right-10px text-main-color"></i>Basic Trip Information</h4>
                       <div class="padding-30px padding-bottom-30px background-white border-radius-10">
                           <form th:action="@{/showtrip}" th:object="${blankTrip}" method="post">
                               <div class="form-group margin-bottom-20px">
-                                  <label><i class="far fa-list-alt margin-right-10px"></i> Trip Starting Point</label>
+                                  <label><i class="far fa-weatherData-alt margin-right-10px"></i> Trip Starting Point</label>
                                   <input th:name="tripStart" th:field="*{start}" type="text" class="form-control form-control-sm"
                                          id="tripStartingPoint" placeholder="Trip Start Location">
                               </div>
                               <div class="form-group margin-bottom-20px">
-                                  <label><i class="far fa-list-alt margin-right-10px"></i> Trip Ending Point</label>
+                                  <label><i class="far fa-weatherData-alt margin-right-10px"></i> Trip Ending Point</label>
                                   <input th:name="tripEnd" th:field="*{end}" type="text" class="form-control form-control-sm"
                                          id="tripEndingPoint" placeholder="Trip Ending Point">
                               </div>
@@ -576,7 +585,7 @@
           <!--<div class="col-md">-->
              <!--<div class="ftco-footer-widget mb-4">-->
               <!--<h2 class="ftco-heading-2">Book Now</h2>-->
-              <!--<ul class="list-unstyled">-->
+              <!--<ul class="weatherData-unstyled">-->
                 <!--<li><a href="#" class="py-2 d-block">Flight</a></li>-->
                 <!--<li><a href="#" class="py-2 d-block">Hotels</a></li>-->
                 <!--<li><a href="#" class="py-2 d-block">Tour</a></li>-->
@@ -590,7 +599,7 @@
           <!--<div class="col-md">-->
              <!--<div class="ftco-footer-widget mb-4">-->
               <!--<h2 class="ftco-heading-2">Top Deals</h2>-->
-              <!--<ul class="list-unstyled">-->
+              <!--<ul class="weatherData-unstyled">-->
                 <!--<li><a href="#" class="py-2 d-block">Luxe Hotel</a></li>-->
                 <!--<li><a href="#" class="py-2 d-block">Venice Tours</a></li>-->
                 <!--<li><a href="#" class="py-2 d-block">Deluxe Hotels</a></li>-->
@@ -605,7 +614,7 @@
           <!--<div class="col-md">-->
              <!--<div class="ftco-footer-widget mb-4">-->
               <!--<h2 class="ftco-heading-2">Contact Information</h2>-->
-              <!--<ul class="list-unstyled">-->
+              <!--<ul class="weatherData-unstyled">-->
                 <!--<li><a href="#" class="py-2 d-block">198 West 21th Street, Suite 721 New York NY 10016</a></li>-->
                 <!--<li><a href="#" class="py-2 d-block">+ 1235 2355 98</a></li>-->
                 <!--<li><a href="#" class="py-2 d-block">info@yoursite.com</a></li>-->
@@ -615,7 +624,7 @@
           <!--</div>-->
           <!--<div class="col-md">-->
             <!--<div class="ftco-footer-widget mb-4">-->
-              <!--<ul class="ftco-footer-social list-unstyled float-md-right float-lft">-->
+              <!--<ul class="ftco-footer-social weatherData-unstyled float-md-right float-lft">-->
                 <!--<li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>-->
                 <!--<li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>-->
                 <!--<li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>-->

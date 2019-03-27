@@ -34,5 +34,26 @@
     </ul>
 </div>
 
+<h3>Gas</h3>
+<div th:each="station : ${locationStations}">
+    <h1 th:text="${station.getStation()}"></h1>
+</div>
+
+<h3>Gas</h3>
+<div th:each="weatherData : ${mainWeatherData}">
+    <h1 th:text="${weatherData.getTemp())}"></h1>
+</div>
+
+<div th:each="cityPlaces : ${tripCityPlaces}">
+    <h1 th:text="${cityPlaces.getCityName()}"></h1>
+    <ul th:each="station : ${locationStations}">
+        <li th:text="${station.getStation()}"></li>
+        <li th:text="${station.getAddress()}"></li>
+        <li th:text="${station.getDistance()}"></li>
+        <li th:text="${station.getRegPrice()}"></li>
+    </ul>
+</div>
+
+
 </body>
 </html>
