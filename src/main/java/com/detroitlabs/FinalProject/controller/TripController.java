@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,19 +49,41 @@ public class TripController {
     @Value("${GOOGLE_MAPS_KEY}")
     private String googleMapsKey;
 
+    private ArrayList<TripToAdd> allPlaces= new ArrayList<>();
+    private static final String AJAX_HEADER_NAME = "X-Requested-With";
+    private static final String AJAX_HEADER_VALUE = "XMLHttpRequest";
+
+
     @RequestMapping("/")
     public String displayHomePage(Model model){
         model.addAttribute("blankTrip", new BlankTrip());
         return "index";
     }
 
+    @PostMapping("/addToMyTrip")
+    public String addPlaceToMyTripList(@ModelAttribute TripToAdd tripToAdd, HttpServletRequest request, Model model){
+        allPlaces.add(tripToAdd);
+        allPlaces.add(new TripToAdd("Ypsilanti", "Ziggys"));
+        model.addAttribute("allPlaces", allPlaces);
+
+        if(AJAX_HEADER_VALUE.equals(request.getHeader(AJAX_HEADER_NAME))){
+            return "showTrip :: tripList";
+        }else{
+            return "showTrip";
+        }
+    }
+
+
 //    @RequestMapping("/index")
 //    public String testPage(){
 //        return "index";
 //    }
 
+
+
+
     @RequestMapping("/showtrip")
-    public String displayTripPage(@ModelAttribute StepCoordinates gaslongitude, @ModelAttribute StepCoordinates gaslatitude, @ModelAttribute BlankTrip blankTrip, ModelMap modelMap){
+    public String displayTripPage(@ModelAttribute StepCoordinates gaslongitude, @ModelAttribute StepCoordinates gaslatitude, @ModelAttribute BlankTrip blankTrip, ModelMap modelMap, Model model){
        String tripStart = blankTrip.getStart();
        String tripEnd = blankTrip.getEnd();
        modelMap.put("tripStart", tripStart);
@@ -89,6 +113,9 @@ public class TripController {
        ArrayList<String> filteredCityNames = filterDuplicateCities(cityNames);
 
        TripCityPlaces tripCityPlaces = generateTripCityPlaces(filteredCityNames, yelpService);
+
+       allPlaces.add(new TripToAdd("Detroit", "Detroit Labs"));
+       model.addAttribute("allPlaces", allPlaces);
 
        modelMap.put("tripSteps", tripSteps);
        modelMap.put("allCityNames", cityNames);

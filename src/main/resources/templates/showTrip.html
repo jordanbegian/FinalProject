@@ -100,7 +100,20 @@
         </div>
 <!-----------COLUMN 3----------->
         <div class="col-sm">
+
             <h1>Your Trip</h1>
+
+            <div class="card d-inline-flex">
+                <div>
+                    <p th:text="'Trip Start: ' + ${tripStart}">Start:</p>
+                    <ul id="elementToReplace" th:fragment="tripList" th:each="place : ${allPlaces}" class="list-group list-group-flush" style="width: 200px;">
+                        <li class="list-group-item">-----</li>
+                        <li class="list-group-item" th:text="${place.getCityName()} + ' : ' + ${place.getBusinessName()} ">City name and Business name</li>
+                    </ul>
+                    <p th:text="'Destination: ' + ${tripEnd}">Start:</p>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -127,6 +140,18 @@
     </ul>
 </div>
 
+<script>
+    function updateList(html){
+        $('#elementToReplace').replaceWith($(html));
+    }
+
+    $('button[name="addItem"]').click(function (event)){
+        event.preventDefault();
+        var data = $('form').serialize();
+        $.post('/addToMyTrip', data, updateList);
+    }
+
+</script>
 
 </body>
 </html>
