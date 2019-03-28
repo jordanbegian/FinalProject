@@ -65,4 +65,8 @@ public class BusinessInformation {
     public void setReviewCount(int reviewCount) {
         this.reviewCount = reviewCount;
     }
+
+    public String getLowercaseName(){
+       return getName().toLowerCase().replaceAll(" ","-" );
+    }
 }
