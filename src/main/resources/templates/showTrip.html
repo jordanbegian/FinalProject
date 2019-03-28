@@ -59,6 +59,7 @@
                     <!-----------RESTAURANT INFO----------->
                                 <ul th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}">
                                     <li th:text="${restaurant.getName()}"></li>
+                                    <button class="btn btn-primary btn-sm addItem" th:value="${restaurant.getName()}">Add to my trip</button>
                                 </ul>
                             </div>
                             <div class="tab-pane fade" th:id="'nav-bars-'+${iStat.index}"
@@ -142,14 +143,17 @@
 
 <script>
     function updateList(html){
+        console.log("replacing html");
         $('#elementToReplace').replaceWith($(html));
     }
 
-    $('button[name="addItem"]').click(function (event)){
+    $('button[class="addItem"]').click(function (event){
+        console.log("Clicked")
         event.preventDefault();
-        var data = $('form').serialize();
+        //var data = $('form').serialize();
+        var data = event.target.val();
         $.post('/addToMyTrip', data, updateList);
-    }
+    });
 
 </script>
 
