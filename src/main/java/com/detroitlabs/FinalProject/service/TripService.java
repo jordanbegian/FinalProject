@@ -16,7 +16,7 @@ public class TripService {
         HttpHeaders headers = new HttpHeaders();
         headers.add("user-agent", "spring");
         HttpEntity entity = new HttpEntity(headers);
-        String fetchAllIssues = "http://api.mygasfeed.com/stations/radius/" + gaslatitude + "/" + gaslongitude + "/1/reg/Distance/aww3vx3d8t.json";
+        String fetchAllIssues = "http://api.mygasfeed.com/stations/radius/" + gaslatitude + "/" + gaslongitude + "/2/reg/Distance/aww3vx3d8t.json";
         ResponseEntity<StationsWrapper> response = restTemplate.exchange(fetchAllIssues, HttpMethod.GET, entity, StationsWrapper.class);
         return response.getBody();
     }

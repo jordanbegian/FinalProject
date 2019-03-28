@@ -53,6 +53,10 @@ public class TripController {
         return "index";
     }
 
+    @RequestMapping("/hotel")
+public String testHotelPage(){
+        return"hotels";
+    }
 //    @RequestMapping("/index")
 //    public String testPage(){
 //        return "index";
@@ -107,9 +111,9 @@ public class TripController {
 
       //Weather Info
 
-//        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
-//        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
-//        modelMap.put("mainWeatherData", mainWeatherData);
+        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
+        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
+        modelMap.put("mainWeatherData", mainWeatherData);
 
 
         return "showtrip";
