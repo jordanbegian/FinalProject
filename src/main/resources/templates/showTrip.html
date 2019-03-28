@@ -32,62 +32,69 @@
                          th:attr="aria-labelledby='heading_'+${iStat.index}" data-parent="#accordion">
             <!-----------CARD BODY START----------->
                         <div class="card-body">
-                            <nav>
-                <!-----------TABS START----------->
-                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <a class="nav-item nav-link active" th:id="'nav-restaurants-tab-'+${iStat.index}"
-                                   data-toggle="tab" th:href="'#nav-restaurants-'+${iStat.index}"
-                                   role="tab" th:attr="aria-controls='nav-restaurants-'+${iStat.index}"
-                                   aria-selected="true">Restaurants</a>
-                                <a class="nav-item nav-link" th:id="'nav-bars-tab-'+${iStat.index}"
-                                   data-toggle="tab" th:href="'#nav-bars-'+${iStat.index}"
-                                   role="tab" th:attr="aria-controls='nav-bars-'+${iStat.index}"
-                                   aria-selected="false">Bars</a>
-                                <a class="nav-item nav-link" th:id="'nav-hotels-tab-'+${iStat.index}"
-                                   data-toggle="tab" th:href="'#nav-hotels-'+${iStat.index}"
-                                   role="tab" th:attr="aria-controls='nav-hotels-'+${iStat.index}"
-                                   aria-selected="false">Hotels</a>
-                                <a class="nav-item nav-link" th:id="'nav-entertainment-tab-'+${iStat.index}"
-                                   data-toggle="tab" th:href="'#nav-entertainment-'+${iStat.index}"
-                                   role="tab" th:attr="aria-controls='nav-entertainment-'+${iStat.index}"
-                                   aria-selected="false">Entertainment</a>
-                            </div>
-                <!----------TABS END----------->
-                        </nav>
-                        <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade show active" th:id="'nav-restaurants-'+${iStat.index}"
-                                 role="tabpanel" th:attr="aria-labelledby='nav-restaurants-tab-'+${iStat.index}">
+                <!-----------NAV PILLS START----------->
+                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" th:id="'pills-restaurants-tab-'+${iStat.index}"
+                                       data-toggle="pill" th:href="'#pills-restaurants-'+${iStat.index}" role="tab"
+                                       th:attr="aria-controls='pills-restaurants-'+${iStat.index}"
+                                       aria-selected="true">Restaurants</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:id="'pills-bars-tab-'+${iStat.index}"
+                                       data-toggle="pill" th:href="'#pills-bars-'+${iStat.index}"
+                                       role="tab" th:attr="aria-controls='pills-bars-'+${iStat.index}"
+                                       aria-selected="false">Bars</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:id="'pills-hotels-tab-'+${iStat.index}"
+                                       data-toggle="pill" th:href="'#pills-hotels-'+${iStat.index}"
+                                       role="tab" th:attr="aria-controls='pills-hotels-'+${iStat.index}"
+                                       aria-selected="false">Hotels</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:id="'pills-entertainment-tab-'+${iStat.index}"
+                                       data-toggle="pill" th:href="'#pills-entertainment-'+${iStat.index}"
+                                       role="tab" th:attr="aria-controls='pills-entertainment-'+${iStat.index}"
+                                       aria-selected="false">Entertainment</a>
+                                </li>
+                            </ul>
+                <!-----------NAV PILLS END----------->
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" th:id="'pills-restaurants-'+${iStat.index}"
+                                     role="tabpanel" th:attr="aria-labelledby='pills-restaurants-tab-'+${iStat.index}">
                     <!-----------RESTAURANT INFO----------->
-                                <ul th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}">
-                                    <li th:text="${restaurant.getName()}"></li>
-                                    <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${restaurant.getLowercaseName()}" th:value="${restaurant.getLowercaseName()}">Add to my trip</button>
-                                </ul>
-                            </div>
-                            <div class="tab-pane fade" th:id="'nav-bars-'+${iStat.index}"
-                                 role="tabpanel" th:attr="aria-labelledby='nav-bars-tab-'+${iStat.index}">
+
+                                    <ul th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}">
+                                        <li th:text="${restaurant.getName()}"></li>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${restaurant.getLowercaseName()}" th:value="${restaurant.getLowercaseName()}">Add to my trip</button>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" th:id="'pills-bars-'+${iStat.index}"
+                                     role="tabpanel" th:attr="aria-labelledby='pills-bars-tab-'+${iStat.index}">
                     <!-----------BAR INFO----------->
-                                <ul th:each="bar : ${cityPlaces.getBars().getBusinesses()}">
-                                    <li th:text="${bar.getName()}"></li>
-                                    <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${bar.getLowercaseName()}" th:value="${bar.getLowercaseName()}">Add to my trip</button>
-                                </ul>
-                            </div>
-                            <div class="tab-pane fade" th:id="'nav-hotels-'+${iStat.index}"
-                                 role="tabpanel" th:attr="aria-labelledby='nav-hotels-tab-'+${iStat.index}">
+                                    <ul th:each="bar : ${cityPlaces.getBars().getBusinesses()}">
+                                      <li th:text="${bar.getName()}"></li>
+                                      <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${bar.getLowercaseName()}" th:value="${bar.getLowercaseName()}">Add to my trip</button>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" th:id="'pills-hotels-'+${iStat.index}"
+                                     role="tabpanel" th:attr="aria-labelledby='pills-hotels-tab-'+${iStat.index}">
                     <!-----------HOTEL INFO----------->
-                                <ul th:each="hotel : ${cityPlaces.getHotels().getBusinesses()}">
-                                    <li th:text="${hotel.getName()}"></li>
-                                    <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${hotel.getLowercaseName()}" th:value="${hotel.getLowercaseName()}">Add to my trip</button>
-                                </ul>
-                            </div>
-                            <div class="tab-pane fade" th:id="'nav-entertainment-'+${iStat.index}"
-                                 role="tabpanel" th:attr="aria-labelledby='nav-entertainment-tab-'+${iStat.index}">
+                                    <ul th:each="hotel : ${cityPlaces.getHotels().getBusinesses()}">
+                                        <li th:text="${hotel.getName()}"></li>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${hotel.getLowercaseName()}" th:value="${hotel.getLowercaseName()}">Add to my trip</button>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" th:id="'pills-entertainment-'+${iStat.index}"
+                                     role="tabpanel" th:attr="aria-labelledby='pills-entertainment-tab-'+${iStat.index}">
                     <!-----------ENTERTAINMENT INFO----------->
-                                <ul th:each="entertainment : ${cityPlaces.getEntertainment().getBusinesses()}">
-                                    <li th:text="${entertainment.getName()}"></li>
-                                    <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${entertainment.getLowercaseName()}" th:value="${entertainment.getLowercaseName()}">Add to my trip</button>
-                                </ul>
+                                    <ul th:each="entertainment : ${cityPlaces.getEntertainment().getBusinesses()}">
+                                        <li th:text="${entertainment.getName()}"></li>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${entertainment.getLowercaseName()}" th:value="${entertainment.getLowercaseName()}">Add to my trip</button>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
                         </div>
             <!-----------CARD BODY END----------->
                     </div>
