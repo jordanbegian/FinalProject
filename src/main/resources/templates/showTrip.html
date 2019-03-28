@@ -58,13 +58,18 @@
                                        role="tab" th:attr="aria-controls='pills-entertainment-'+${iStat.index}"
                                        aria-selected="false">Entertainment</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:id="'pills-gas-tab-'+${iStat.index}"
+                                       data-toggle="pill" th:href="'#pills-gas-'+${iStat.index}"
+                                       role="tab" th:attr="aria-controls='pills-gas-'+${iStat.index}"
+                                       aria-selected="false">Gas Stations</a>
+                                </li>
                             </ul>
                 <!-----------NAV PILLS END----------->
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" th:id="'pills-restaurants-'+${iStat.index}"
                                      role="tabpanel" th:attr="aria-labelledby='pills-restaurants-tab-'+${iStat.index}">
                     <!-----------RESTAURANT INFO----------->
-
                                     <ul th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}">
                                         <li th:text="${restaurant.getName()}"></li>
                                         <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${restaurant.getLowercaseName()}" th:value="${restaurant.getLowercaseName()}">Add to my trip</button>
@@ -74,8 +79,8 @@
                                      role="tabpanel" th:attr="aria-labelledby='pills-bars-tab-'+${iStat.index}">
                     <!-----------BAR INFO----------->
                                     <ul th:each="bar : ${cityPlaces.getBars().getBusinesses()}">
-                                      <li th:text="${bar.getName()}"></li>
-                                      <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${bar.getLowercaseName()}" th:value="${bar.getLowercaseName()}">Add to my trip</button>
+                                        <li th:text="${bar.getName()}"></li>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${bar.getLowercaseName()}" th:value="${bar.getLowercaseName()}">Add to my trip</button>
                                     </ul>
                                 </div>
                                 <div class="tab-pane fade" th:id="'pills-hotels-'+${iStat.index}"
@@ -92,6 +97,14 @@
                                     <ul th:each="entertainment : ${cityPlaces.getEntertainment().getBusinesses()}">
                                         <li th:text="${entertainment.getName()}"></li>
                                         <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${entertainment.getLowercaseName()}" th:value="${entertainment.getLowercaseName()}">Add to my trip</button>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" th:id="'pills-gas-'+${iStat.index}"
+                                     role="tabpanel" th:attr="aria-labelledby='pills-gas-tab-'+${iStat.index}">
+                    <!-----------GAS STATION INFO----------->
+                                    <ul th:each="gas : ${cityPlaces.getGasStations().getBusinesses()}">
+                                        <li th:text="${gas.getName()}"></li>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${gas.getLowercaseName()}" th:value="${gas.getLowercaseName()}">Add to my trip</button>
                                     </ul>
                                 </div>
                             </div>
@@ -135,22 +148,7 @@
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-
-<!--<h3>Gas</h3>-->
-<!--<div th:each="weatherData : ${mainWeatherData}">-->
-    <!--<h1 th:text="${weatherData.getTemp())}"></h1>-->
-<!--</div>-->
-
-<div th:each="cityPlaces : ${tripCityPlaces}">
-    <h1 th:text="${cityPlaces.getCityName()}"></h1>
-    <ul th:each="station : ${locationStations}">
-        <li th:text="${station.getStation()}"></li>
-        <li th:text="${station.getAddress()}"></li>
-        <li th:text="${station.getDistance()}"></li>
-    </ul>
-</div>
-
+  
 <!--//WORKS WITH PATH VARIABLES -->
 <script>
     function replaceItems (html) {
