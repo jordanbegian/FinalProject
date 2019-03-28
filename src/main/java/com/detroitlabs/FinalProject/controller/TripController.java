@@ -128,7 +128,7 @@ public String testHotelPage(){
 //        modelMap.put("mainWeatherData", mainWeatherData);
 
 
-        return "showtrip";
+        return "hotels" ;
     }
 
     public TripCityPlaces generateTripCityPlaces(ArrayList<String> filteredCities, YelpService yelpService){
