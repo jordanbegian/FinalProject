@@ -95,4 +95,21 @@ public class YelpService {
 
         return responseEntity.getBody();
     }
+
+    public Businesses fetchYelpMostRatedGasStations(String location){
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add("Authorization","BEARER " + yelpKey);
+        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<Businesses> responseEntity =
+                restTemplate.exchange("https://api.yelp.com/v3/businesses/search?location=" + location +
+                                "&radius=20000&term=gas&sort_by=review_count&limit=5",
+                        HttpMethod.GET, httpEntity, Businesses.class);
+
+        return responseEntity.getBody();
+    }
 }

@@ -1,7 +1,6 @@
 package com.detroitlabs.FinalProject.service;
 
 import com.detroitlabs.FinalProject.model.Forecast;
-import com.detroitlabs.FinalProject.model.StationsWrapper;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

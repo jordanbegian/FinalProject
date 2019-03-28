@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,29 +17,13 @@ import java.util.List;
 public class TripController {
 
     @Autowired
-    private Businesses businesses;
-
-    @Autowired
-    private BusinessInformation businessInformation;
-
-    @Autowired
     private YelpService yelpService;
-
-
-    @Autowired
-    private TripService tripService;
 
     @Autowired
     private GeoCodingService geoCodingService;
 
     @Autowired
    private DirectionsService directionsService;
-
-    @Autowired
-    StationsWrapper stationsWrapper;
-
-    @Autowired
-    Station station;
 
     @Autowired
     PictureWrapper pictureWrapper;
@@ -53,12 +37,41 @@ public class TripController {
     @Value("${GOOGLE_MAPS_KEY}")
     private String googleMapsKey;
 
+    private ArrayList<TripToAdd> allPlaces= new ArrayList<>();
+    private static final String AJAX_HEADER_NAME = "X-Requested-With";
+    private static final String AJAX_HEADER_VALUE = "XMLHttpRequest";
+
+
     @RequestMapping("/")
     public String displayHomePage(Model model){
         model.addAttribute("blankTrip", new BlankTrip());
         return "index";
     }
 
+    //WORKS WITH REQUEST PARAMS
+    @PostMapping("/addToMyTrip/{businessName}")
+    public String addPlaceToMyTripList(@PathVariable(name="businessName") String businessName,HttpServletRequest request, Model model){
+        allPlaces.add(new TripToAdd(businessName));
+        model.addAttribute("allPlaces", allPlaces);
+
+        if(AJAX_HEADER_VALUE.equals(request.getHeader(AJAX_HEADER_NAME))){
+            return "showTrip :: tripList";
+        }else{
+            return "showTrip";
+        }
+    }
+
+//ATTEMPT WITH REQUEST BODY
+//    @PostMapping("/addToMyTrip")
+//    public String addPlaceToMyTripList(@RequestBody TripToAdd tripToAdd, HttpServletRequest request, Model model){
+//        allPlaces.add(tripToAdd);
+//        model.addAttribute("allPlaces", allPlaces);
+//
+//        if(AJAX_HEADER_VALUE.equals(request.getHeader(AJAX_HEADER_NAME))){
+//            return "showTrip :: tripList";
+//        }else{
+//            return "showTrip";
+//        }
     @RequestMapping("/hotel")
 public String testHotelPage(){
         return"hotels";
@@ -68,26 +81,13 @@ public String testHotelPage(){
 //        return "index";
 //    }
 
+
     @RequestMapping("/showtrip")
-    public String displayTripPage(@ModelAttribute StepCoordinates gaslongitude, @ModelAttribute StepCoordinates gaslatitude, @ModelAttribute BlankTrip blankTrip, ModelMap modelMap){
+    public String displayTripPage(@ModelAttribute StepCoordinates gaslongitude, @ModelAttribute StepCoordinates gaslatitude, @ModelAttribute BlankTrip blankTrip, ModelMap modelMap, Model model){
        String tripStart = blankTrip.getStart();
        String tripEnd = blankTrip.getEnd();
        modelMap.put("tripStart", tripStart);
        modelMap.put("tripEnd", tripEnd);
-
-       //YELP
-
-       Businesses barBusinesses = yelpService.fetchYelpMostRatedBars(blankTrip.getEnd());
-       modelMap.put("barBusinesses",barBusinesses.getBusinesses());
-
-       Businesses restaurantBusinesses = yelpService.fetchYelpMostRatedRestaurants(blankTrip.getEnd());
-       modelMap.put("restaurantBusinesses", restaurantBusinesses.getBusinesses());
-
-       Businesses hotelBusinesses = yelpService.fetchYelpMostRatedHotels(blankTrip.getEnd());
-       modelMap.put("hotelBusinesses", hotelBusinesses.getBusinesses());
-
-       Businesses entertainmentBusinesses = yelpService.fetchYelpMostRatedEntertainment(blankTrip.getEnd());
-       modelMap.put("entertainmentBusinesses", entertainmentBusinesses.getBusinesses());
 
        //Google Directions
 
@@ -100,6 +100,9 @@ public String testHotelPage(){
 
        TripCityPlaces tripCityPlaces = generateTripCityPlaces(filteredCityNames, yelpService);
 
+       allPlaces.add(new TripToAdd("Detroit", "Detroit Labs"));
+       model.addAttribute("allPlaces", allPlaces);
+
        modelMap.put("tripSteps", tripSteps);
        modelMap.put("allCityNames", cityNames);
        modelMap.put("filteredCityNames",filteredCityNames);
@@ -111,9 +114,6 @@ public String testHotelPage(){
         gaslongitude = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps().get(0).getEndLocation();
        gaslatitude = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps().get(0).getEndLocation();
 
-       StationsWrapper stationsWrapper = tripService.DisplayAllGasStation(gaslongitude.getLongitude(), gaslatitude.getLatitude());
-        List<Station> locationStations = stationsWrapper.getStations();
-      modelMap.put("locationStations", locationStations);
 
       PictureWrapper pictureWrapper = pictureService.fetchPictureByCity(tripEnd);
       List<PictureResults> pictureResults = pictureWrapper.getPictureResults();
@@ -121,14 +121,14 @@ public String testHotelPage(){
 
 
 
-      //Weather Info
+      //Weather In
 
 //        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
 //        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
 //        modelMap.put("mainWeatherData", mainWeatherData);
 
 
-        return "hotels";
+        return "showtrip";
     }
 
     public TripCityPlaces generateTripCityPlaces(ArrayList<String> filteredCities, YelpService yelpService){
@@ -173,17 +173,5 @@ public String testHotelPage(){
 
         return allCities;
     }
-
-
-//putting in a comment
-//    @RequestMapping("/")
-//    @ResponseBody
-//    public String displayAllIssues(ModelMap modelMap){
-//        StationsWrapper stationsWrapper = tripService.DisplayAllGasStation();
-//      WeatherData<Stations> allGasStations = stationsWrapper.getStations();
-//        modelMap.put("allGasStations", allGasStations);
-//        return allGasStations.toString();
-//    }
-
 
 }
