@@ -42,7 +42,13 @@ public class TripController {
     Station station;
 
     @Autowired
-    WeatherService weatherService;
+    PictureWrapper pictureWrapper;
+
+    @Autowired
+    PictureService pictureService;
+
+//    @Autowired
+//    WeatherService weatherService;
 
     @Value("${GOOGLE_MAPS_KEY}")
     private String googleMapsKey;
@@ -109,14 +115,20 @@ public String testHotelPage(){
         List<Station> locationStations = stationsWrapper.getStations();
       modelMap.put("locationStations", locationStations);
 
+      PictureWrapper pictureWrapper = pictureService.fetchPictureByCity(tripEnd);
+      List<PictureResults> pictureResults = pictureWrapper.getPictureResults();
+      modelMap.put("pictureResults", pictureResults);
+
+
+
       //Weather Info
 
-        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
-        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
-        modelMap.put("mainWeatherData", mainWeatherData);
+//        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
+//        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
+//        modelMap.put("mainWeatherData", mainWeatherData);
 
 
-        return "showtrip";
+        return "hotels";
     }
 
     public TripCityPlaces generateTripCityPlaces(ArrayList<String> filteredCities, YelpService yelpService){
