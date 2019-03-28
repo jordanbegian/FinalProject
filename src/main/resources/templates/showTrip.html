@@ -60,7 +60,7 @@
                     <!-----------RESTAURANT INFO----------->
                                 <ul th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}">
                                     <li th:text="${restaurant.getName()}"></li>
-                                    <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${restaurant.getLowercaseName()}" th:value="${restaurant.getLowercaseName()} + '-#-' + ${restaurant.getUrl()} ">Add to my trip</button>
+                                    <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${restaurant.getLowercaseName()}" th:value="${restaurant.getLowercaseName()}">Add to my trip</button>
                                 </ul>
                             </div>
                             <div class="tab-pane fade" th:id="'nav-bars-'+${iStat.index}"
@@ -68,6 +68,7 @@
                     <!-----------BAR INFO----------->
                                 <ul th:each="bar : ${cityPlaces.getBars().getBusinesses()}">
                                     <li th:text="${bar.getName()}"></li>
+                                    <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${bar.getLowercaseName()}" th:value="${bar.getLowercaseName()}">Add to my trip</button>
                                 </ul>
                             </div>
                             <div class="tab-pane fade" th:id="'nav-hotels-'+${iStat.index}"
@@ -75,6 +76,7 @@
                     <!-----------HOTEL INFO----------->
                                 <ul th:each="hotel : ${cityPlaces.getHotels().getBusinesses()}">
                                     <li th:text="${hotel.getName()}"></li>
+                                    <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${hotel.getLowercaseName()}" th:value="${hotel.getLowercaseName()}">Add to my trip</button>
                                 </ul>
                             </div>
                             <div class="tab-pane fade" th:id="'nav-entertainment-'+${iStat.index}"
@@ -82,6 +84,7 @@
                     <!-----------ENTERTAINMENT INFO----------->
                                 <ul th:each="entertainment : ${cityPlaces.getEntertainment().getBusinesses()}">
                                     <li th:text="${entertainment.getName()}"></li>
+                                    <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${entertainment.getLowercaseName()}" th:value="${entertainment.getLowercaseName()}">Add to my trip</button>
                                 </ul>
                             </div>
                         </div>

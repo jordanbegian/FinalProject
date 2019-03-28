@@ -55,7 +55,7 @@ public class TripController {
     @RequestMapping("/")
     public String displayHomePage(Model model){
         model.addAttribute("blankTrip", new BlankTrip());
-        return "bootStrapHome";
+        return "index";
     }
 
     //WORKS WITH REQUEST PARAMS
