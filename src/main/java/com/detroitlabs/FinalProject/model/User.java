@@ -1,21 +1,26 @@
 package com.detroitlabs.FinalProject.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "User")
-public class User {
+@Table(name="User",uniqueConstraints = {
+        @UniqueConstraint(columnNames = "id"),
+        @UniqueConstraint(columnNames = "username") })
+@JsonIgnoreProperties(value = {"id"},
+        allowGetters = true)
+public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-
+    @Column(name = "username", nullable = false)
     private String username;
 
-    public User(String name){
-        this.username = name;
-    }
 
     public Integer getId() {
         return id;
@@ -32,4 +37,9 @@ public class User {
     public void setName(String name) {
         this.username = name;
     }
+
+//    @Override
+//    public String toString() {
+//        return String.format("User [id=%s, username=%s]", id, username);
+//    }
 }

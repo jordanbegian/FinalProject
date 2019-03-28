@@ -1,24 +1,28 @@
 package com.detroitlabs.FinalProject.controller;
 
 import com.detroitlabs.FinalProject.model.User;
-import com.detroitlabs.FinalProject.model.UserRepository;
+import com.detroitlabs.FinalProject.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping(path = "/users")
+import javax.validation.Valid;
+import java.util.List;
+
+@RestController
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping(path="/all")
-    public @ResponseBody
-    Iterable<User> getAllUsers() {
-        // This returns a JSON or XML with the users
+    @GetMapping("/users")
+    public List<User> getAllNotes() {
         return userRepository.findAll();
+    }
+
+    @PostMapping("/notes")
+    public User createNote(@Valid @RequestBody User note) {
+        return userRepository.save(note);
     }
 }
