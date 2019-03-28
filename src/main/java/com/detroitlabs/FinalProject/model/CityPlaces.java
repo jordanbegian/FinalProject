@@ -8,6 +8,7 @@ public class CityPlaces {
     private Businesses restaurants;
     private Businesses hotels;
     private Businesses entertainment;
+    private Businesses gasStations;
 
     public CityPlaces(String cityName, YelpService yelpService) {
         this.cityName = cityName;
@@ -15,6 +16,7 @@ public class CityPlaces {
         this.restaurants = yelpService.fetchYelpMostRatedRestaurants(cityName);
         this.hotels = yelpService.fetchYelpMostRatedHotels(cityName);
         this.entertainment = yelpService.fetchYelpMostRatedEntertainment(cityName);
+        this.gasStations = yelpService.fetchYelpMostRatedGasStations(cityName);
     }
 
     public String getCityName() {
@@ -55,5 +57,13 @@ public class CityPlaces {
 
     public void setEntertainment(Businesses entertainment) {
         this.entertainment = entertainment;
+    }
+
+    public Businesses getGasStations() {
+        return gasStations;
+    }
+
+    public void setGasStations(Businesses gasStations) {
+        this.gasStations = gasStations;
     }
 }

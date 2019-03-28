@@ -17,29 +17,13 @@ import java.util.List;
 public class TripController {
 
     @Autowired
-    private Businesses businesses;
-
-    @Autowired
-    private BusinessInformation businessInformation;
-
-    @Autowired
     private YelpService yelpService;
-
-
-    @Autowired
-    private TripService tripService;
 
     @Autowired
     private GeoCodingService geoCodingService;
 
     @Autowired
    private DirectionsService directionsService;
-
-    @Autowired
-    StationsWrapper stationsWrapper;
-
-    @Autowired
-    Station station;
 
     @Autowired
     WeatherService weatherService;
@@ -65,20 +49,6 @@ public class TripController {
        modelMap.put("tripStart", tripStart);
        modelMap.put("tripEnd", tripEnd);
 
-       //YELP
-
-       Businesses barBusinesses = yelpService.fetchYelpMostRatedBars(blankTrip.getEnd());
-       modelMap.put("barBusinesses",barBusinesses.getBusinesses());
-
-       Businesses restaurantBusinesses = yelpService.fetchYelpMostRatedRestaurants(blankTrip.getEnd());
-       modelMap.put("restaurantBusinesses", restaurantBusinesses.getBusinesses());
-
-       Businesses hotelBusinesses = yelpService.fetchYelpMostRatedHotels(blankTrip.getEnd());
-       modelMap.put("hotelBusinesses", hotelBusinesses.getBusinesses());
-
-       Businesses entertainmentBusinesses = yelpService.fetchYelpMostRatedEntertainment(blankTrip.getEnd());
-       modelMap.put("entertainmentBusinesses", entertainmentBusinesses.getBusinesses());
-
        //Google Directions
 
        DirectionSet directionSet =  directionsService.fetchDirectionSetForRoute(tripStart, tripEnd);
@@ -95,15 +65,6 @@ public class TripController {
        modelMap.put("filteredCityNames",filteredCityNames);
        modelMap.put("tripCityPlaces", tripCityPlaces.getTripCityPlaces());
        modelMap.put("googleMapsKey", googleMapsKey);
-
-       //Gas Station Info
-
-        gaslongitude = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps().get(0).getEndLocation();
-       gaslatitude = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps().get(0).getEndLocation();
-
-       StationsWrapper stationsWrapper = tripService.DisplayAllGasStation(gaslongitude.getLongitude(), gaslatitude.getLatitude());
-        List<Station> locationStations = stationsWrapper.getStations();
-      modelMap.put("locationStations", locationStations);
 
       //Weather Info
 
@@ -157,17 +118,5 @@ public class TripController {
 
         return allCities;
     }
-
-
-//putting in a comment
-//    @RequestMapping("/")
-//    @ResponseBody
-//    public String displayAllIssues(ModelMap modelMap){
-//        StationsWrapper stationsWrapper = tripService.DisplayAllGasStation();
-//      WeatherData<Stations> allGasStations = stationsWrapper.getStations();
-//        modelMap.put("allGasStations", allGasStations);
-//        return allGasStations.toString();
-//    }
-
 
 }
