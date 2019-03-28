@@ -5,6 +5,7 @@
     <title>Trip</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -59,7 +60,7 @@
                     <!-----------RESTAURANT INFO----------->
                                 <ul th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}">
                                     <li th:text="${restaurant.getName()}"></li>
-                                    <button class="btn btn-primary btn-sm addItem" th:value="${restaurant.getName()}">Add to my trip</button>
+                                    <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${restaurant.getLowercaseName()}" th:value="${restaurant.getLowercaseName()} + '-#-' + ${restaurant.getUrl()} ">Add to my trip</button>
                                 </ul>
                             </div>
                             <div class="tab-pane fade" th:id="'nav-bars-'+${iStat.index}"
@@ -108,8 +109,7 @@
                 <div>
                     <p th:text="'Trip Start: ' + ${tripStart}">Start:</p>
                     <ul id="elementToReplace" th:fragment="tripList" th:each="place : ${allPlaces}" class="list-group list-group-flush" style="width: 200px;">
-                        <li class="list-group-item">-----</li>
-                        <li class="list-group-item" th:text="${place.getCityName()} + ' : ' + ${place.getBusinessName()} ">City name and Business name</li>
+                            <li class="list-group-item placeOnList" th:text="${place.getBusinessName()}">Business name</li>
                     </ul>
                     <p th:text="'Destination: ' + ${tripEnd}">Start:</p>
                 </div>
@@ -119,8 +119,8 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"-->
+        <!--integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
@@ -141,21 +141,64 @@
     </ul>
 </div>
 
+<!--//WORKS WITH PATH VARIABLES -->
 <script>
-    function updateList(html){
-        console.log("replacing html");
+    function replaceItems (html) {
+        // Replace the <fieldset id="items"> with a new one returned by server.
+        $('.placeOnList').remove();
         $('#elementToReplace').replaceWith($(html));
     }
 
-    $('button[class="addItem"]').click(function (event){
-        console.log("Clicked")
+    $('button[name="addItem"]').click(function (event) {
         event.preventDefault();
-        //var data = $('form').serialize();
-        var data = event.target.val();
-        $.post('/addToMyTrip', data, updateList);
+        console.log("within click");
+        var data = $(event.target).val();
+        // var businessName = "popeyes";
+        // var data = $('form').serialize();
+        // Add parameter "addItem" to POSTed form data. Button's name and value is
+        // POSTed only when clicked. Since "event.preventDefault();" prevents from
+        // actual clicking the button, following line will add parameter to form
+        // data.
+        //data += 'addItem';
+        $.post('/addToMyTrip/' + data, data, replaceItems);
     });
 
 </script>
+
+<!--//ATTEMPT WITH REQUEST BODY-->
+<!--<script>-->
+    <!--function replaceItems (html) {-->
+        <!--$('#elementToReplace').replaceWith($(html));-->
+    <!--}-->
+
+    <!--$('button[name="addItem"]').click(function (event) {-->
+        <!--event.preventDefault();-->
+        <!--console.log("within click");-->
+        <!--var businessName = $(event.target).val();-->
+
+        <!--var tripToAdd = {-->
+            <!--"cityName": "default",-->
+            <!--"businessName": businessName,-->
+            <!--"url": "default"-->
+        <!--};-->
+
+        <!--$.ajax({-->
+            <!--type: "POST",-->
+            <!--contentType: 'application/json; charset=utf-8',-->
+            <!--dataType: 'json',-->
+            <!--url: "/addToMyTrip",-->
+            <!--data: JSON.stringify(tripToAdd), // Note it is important-->
+            <!--success: function (result) {-->
+                <!--replaceItems(result);-->
+            <!--}-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
+
+
+
+
+
 
 </body>
 </html>

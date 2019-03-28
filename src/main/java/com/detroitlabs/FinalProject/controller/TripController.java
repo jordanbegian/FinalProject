@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -57,13 +55,13 @@ public class TripController {
     @RequestMapping("/")
     public String displayHomePage(Model model){
         model.addAttribute("blankTrip", new BlankTrip());
-        return "index";
+        return "bootStrapHome";
     }
 
-    @PostMapping("/addToMyTrip")
-    public String addPlaceToMyTripList(@ModelAttribute TripToAdd tripToAdd, HttpServletRequest request, Model model){
-        allPlaces.add(tripToAdd);
-        allPlaces.add(new TripToAdd("Ypsilanti", "Ziggys"));
+    //WORKS WITH REQUEST PARAMS
+    @PostMapping("/addToMyTrip/{businessName}")
+    public String addPlaceToMyTripList(@PathVariable(name="businessName") String businessName,HttpServletRequest request, Model model){
+        allPlaces.add(new TripToAdd(businessName));
         model.addAttribute("allPlaces", allPlaces);
 
         if(AJAX_HEADER_VALUE.equals(request.getHeader(AJAX_HEADER_NAME))){
@@ -73,13 +71,18 @@ public class TripController {
         }
     }
 
-
-//    @RequestMapping("/index")
-//    public String testPage(){
-//        return "index";
+//ATTEMPT WITH REQUEST BODY
+//    @PostMapping("/addToMyTrip")
+//    public String addPlaceToMyTripList(@RequestBody TripToAdd tripToAdd, HttpServletRequest request, Model model){
+//        allPlaces.add(tripToAdd);
+//        model.addAttribute("allPlaces", allPlaces);
+//
+//        if(AJAX_HEADER_VALUE.equals(request.getHeader(AJAX_HEADER_NAME))){
+//            return "showTrip :: tripList";
+//        }else{
+//            return "showTrip";
+//        }
 //    }
-
-
 
 
     @RequestMapping("/showtrip")
