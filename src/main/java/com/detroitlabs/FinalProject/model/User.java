@@ -3,43 +3,59 @@ package com.detroitlabs.FinalProject.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(name="User",uniqueConstraints = {
-        @UniqueConstraint(columnNames = "id"),
-        @UniqueConstraint(columnNames = "username") })
-@JsonIgnoreProperties(value = {"id"},
-        allowGetters = true)
-public class User implements Serializable {
+@Table(name="users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", unique = true, nullable = false)
-    private Integer id;
+    @Column(name="id")
+    private Long id;
 
-    @Column(name = "username", nullable = false)
-    private String username;
+    @NotNull
+    @Column(name="name")
+    private String name;
+
+    @NotNull
+    @Column(name="email")
+    private String email;
+
+    public User() { }
+
+    public User(long id) {
+        this.id = id;
+    }
+
+    public User(String email, String name) {
+        this.email = email;
+        this.name = name;
+    }
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public String getName() {
-        return username;
+        return name;
     }
 
     public void setName(String name) {
-        this.username = name;
+        this.name = name;
     }
 
-//    @Override
-//    public String toString() {
-//        return String.format("User [id=%s, username=%s]", id, username);
-//    }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

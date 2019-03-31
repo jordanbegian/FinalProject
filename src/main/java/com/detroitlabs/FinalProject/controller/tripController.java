@@ -25,6 +25,9 @@ public class tripController {
     BusinessInformation businessInformation;
 
     @Autowired
+    UserController userController;
+
+    @Autowired
     YelpService yelpService;
 
     @Autowired
@@ -42,6 +45,9 @@ public class tripController {
     @RequestMapping("/")
     public String displayHomePage(Model model){
         model.addAttribute("blankTrip", new BlankTrip());
+
+       // userController.create("brian@brian.com", "Brian");
+
         return "bootstrapHome";
     }
 
@@ -67,15 +73,5 @@ public class tripController {
        modelMap.put("googleMapsKey", googleMapsKey);
         return "showtrip";
     }
-
-//    @RequestMapping("/")
-//    @ResponseBody
-//    public String displayAllIssues(ModelMap modelMap){
-//        StationsWrapper stationsWrapper = tripService.DisplayAllGasStation();
-//      List<Stations> allGasStations = stationsWrapper.getStations();
-//        modelMap.put("allGasStations", allGasStations);
-//        return allGasStations.toString();
-//    }
-
 
 }
