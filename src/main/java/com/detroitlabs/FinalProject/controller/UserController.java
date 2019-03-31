@@ -1,6 +1,7 @@
 package com.detroitlabs.FinalProject.controller;
 
 import com.detroitlabs.FinalProject.model.User;
+import com.detroitlabs.FinalProject.model.UserInfo;
 import com.detroitlabs.FinalProject.model.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,12 @@ public class UserController {
 
     @RequestMapping("/create")
     @ResponseBody
-    public String create(String email, String name) {
+    public String create(@ModelAttribute UserInfo userInfo) {
         String userId = "";
+        String newUserName = userInfo.getUsername();
+        String newUserEmail = userInfo.getEmail();
         try {
-            User user = new User(email, name);
+            User user = new User(newUserEmail, newUserName);
             userRepository.save(user);
             userId = String.valueOf(user.getId());
         }

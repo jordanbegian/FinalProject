@@ -44,6 +44,7 @@ public class TripController {
 
     @RequestMapping("/account")
     public String displayNewAccountPage(Model model){
+        model.addAttribute("userInfo", new UserInfo());
         return "newAccount";
     }
 
