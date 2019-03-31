@@ -3,34 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <title>Trip</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-<p th:text="'Trip Start: ' + ${tripStart}">trip start</p>
-<p th:text="'Trip End: ' + ${tripEnd}">trip End</p>
 
-<iframe width="600" height="450" frameborder="0" style="border:0"
-        th:src="@{'https://www.google.com/maps/embed/v1/directions?origin=' + ${tripStart} + '&destination=' + ${tripEnd} + '&key=' + ${googleMapsKey} + '&avoid=tolls|highways'}"
-        allowfullscreen></iframe>
+<div class="container">
+    <div class="row">
+<!-----------COLUMN 1----------->
+        <div class="col-sm">
+            <p th:text="'Trip Start: ' + ${tripStart}">trip start</p>
+            <p th:text="'Trip End: ' + ${tripEnd}">trip End</p>
+    <!-----------ACCORDION START----------->
+            <div id="accordion">
+                <div class="card" th:each="cityPlaces, iStat : ${tripCityPlaces}">
+                    <div class="card-header" th:id="'heading_'+${iStat.index}">
+                        <h5 class="mb-0">
+            <!-----------CITY NAME BUTTON START----------->
+                            <button class="btn btn-link" data-toggle="collapse"
+                                    th:attr="data-target='#collapse_'+${iStat.index}, aria-controls='collapse_'+${iStat.index}"
+                                    aria-expanded="false" th:text="${cityPlaces.getCityName()}"></button>
+            <!-----------CITY NAME BUTTON END----------->
+                        </h5>
+                    </div>
 
-<h3>Bars</h3>
-<div th:each="BusinessInformation : ${barBusinesses}">
-    <p th:text="${BusinessInformation.getName()}"></p>
-    <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
+                    <div th:id="'collapse_'+${iStat.index}" class="collapse"
+                         th:attr="aria-labelledby='heading_'+${iStat.index}" data-parent="#accordion">
+            <!-----------CARD BODY START----------->
+                        <div class="card-body">
+                <!-----------NAV PILLS START----------->
+                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" th:id="'pills-restaurants-tab-'+${iStat.index}"
+                                       data-toggle="pill" th:href="'#pills-restaurants-'+${iStat.index}" role="tab"
+                                       th:attr="aria-controls='pills-restaurants-'+${iStat.index}"
+                                       aria-selected="true">Restaurants</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:id="'pills-bars-tab-'+${iStat.index}"
+                                       data-toggle="pill" th:href="'#pills-bars-'+${iStat.index}"
+                                       role="tab" th:attr="aria-controls='pills-bars-'+${iStat.index}"
+                                       aria-selected="false">Bars</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:id="'pills-hotels-tab-'+${iStat.index}"
+                                       data-toggle="pill" th:href="'#pills-hotels-'+${iStat.index}"
+                                       role="tab" th:attr="aria-controls='pills-hotels-'+${iStat.index}"
+                                       aria-selected="false">Hotels</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:id="'pills-entertainment-tab-'+${iStat.index}"
+                                       data-toggle="pill" th:href="'#pills-entertainment-'+${iStat.index}"
+                                       role="tab" th:attr="aria-controls='pills-entertainment-'+${iStat.index}"
+                                       aria-selected="false">Entertainment</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:id="'pills-gas-tab-'+${iStat.index}"
+                                       data-toggle="pill" th:href="'#pills-gas-'+${iStat.index}"
+                                       role="tab" th:attr="aria-controls='pills-gas-'+${iStat.index}"
+                                       aria-selected="false">Gas Stations</a>
+                                </li>
+                            </ul>
+                <!-----------NAV PILLS END----------->
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" th:id="'pills-restaurants-'+${iStat.index}"
+                                     role="tabpanel" th:attr="aria-labelledby='pills-restaurants-tab-'+${iStat.index}">
+                    <!-----------RESTAURANT INFO----------->
+                                    <ul th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}">
+                                        <li th:text="${restaurant.getName()}"></li>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${restaurant.getLowercaseName()}" th:value="${restaurant.getLowercaseName()}">Add to my trip</button>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" th:id="'pills-bars-'+${iStat.index}"
+                                     role="tabpanel" th:attr="aria-labelledby='pills-bars-tab-'+${iStat.index}">
+                    <!-----------BAR INFO----------->
+                                    <ul th:each="bar : ${cityPlaces.getBars().getBusinesses()}">
+                                        <li th:text="${bar.getName()}"></li>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${bar.getLowercaseName()}" th:value="${bar.getLowercaseName()}">Add to my trip</button>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" th:id="'pills-hotels-'+${iStat.index}"
+                                     role="tabpanel" th:attr="aria-labelledby='pills-hotels-tab-'+${iStat.index}">
+                    <!-----------HOTEL INFO----------->
+                                    <ul th:each="hotel : ${cityPlaces.getHotels().getBusinesses()}">
+                                        <li th:text="${hotel.getName()}"></li>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${hotel.getLowercaseName()}" th:value="${hotel.getLowercaseName()}">Add to my trip</button>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" th:id="'pills-entertainment-'+${iStat.index}"
+                                     role="tabpanel" th:attr="aria-labelledby='pills-entertainment-tab-'+${iStat.index}">
+                    <!-----------ENTERTAINMENT INFO----------->
+                                    <ul th:each="entertainment : ${cityPlaces.getEntertainment().getBusinesses()}">
+                                        <li th:text="${entertainment.getName()}"></li>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${entertainment.getLowercaseName()}" th:value="${entertainment.getLowercaseName()}">Add to my trip</button>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" th:id="'pills-gas-'+${iStat.index}"
+                                     role="tabpanel" th:attr="aria-labelledby='pills-gas-tab-'+${iStat.index}">
+                    <!-----------GAS STATION INFO----------->
+                                    <ul th:each="gas : ${cityPlaces.getGasStations().getBusinesses()}">
+                                        <li th:text="${gas.getName()}"></li>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${gas.getLowercaseName()}" th:value="${gas.getLowercaseName()}">Add to my trip</button>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+            <!-----------CARD BODY END----------->
+                    </div>
+                </div>
+            </div>
+    <!-----------ACCORDION END----------->
+        </div>
+<!-----------COLUMN 2----------->
+        <div class="col-sm">
+        <!-----------MAP----------->
+            <iframe width="600" height="450" frameborder="0" style="border:0"
+                    th:src="@{'https://www.google.com/maps/embed/v1/directions?origin=' + ${tripStart} + '&destination='
+        + ${tripEnd} + '&key=' + ${googleMapsKey}}"
+                    allowfullscreen></iframe>
+        </div>
+<!-----------COLUMN 3----------->
+        <div class="col-sm">
+
+            <h1>Your Trip</h1>
+
+            <div class="card d-inline-flex">
+                <div>
+                    <p th:text="'Trip Start: ' + ${tripStart}">Start:</p>
+                    <ul id="elementToReplace" th:fragment="tripList" th:each="place : ${allPlaces}" class="list-group list-group-flush" style="width: 200px;">
+                            <li class="list-group-item placeOnList" th:text="${place.getBusinessName()}">Business name</li>
+                    </ul>
+                    <p th:text="'Destination: ' + ${tripEnd}">Start:</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
-<h3>Restaurants</h3>
-<div th:each="BusinessInformation : ${restaurantBusinesses}">
-    <p th:text="${BusinessInformation.getName()}"></p>
-    <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
-</div>
-<h3>Hotels</h3>
-<div th:each="BusinessInformation : ${hotelBusinesses}">
-    <p th:text="${BusinessInformation.getName()}"></p>
-    <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
-</div>
-<h3>Entertainment</h3>
-<div th:each="BusinessInformation : ${entertainmentBusinesses}">
-    <p th:text="${BusinessInformation.getName()}"></p>
-    <a th:href="${BusinessInformation.getUrl()}">Yelp Page</a>
-</div>
+
+<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"-->
+        <!--integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+<!--//WORKS WITH PATH VARIABLES -->
+<script>
+    function replaceItems (html) {
+        // Replace the <fieldset id="items"> with a new one returned by server.
+        $('.placeOnList').remove();
+        $('#elementToReplace').replaceWith($(html));
+    }
+
+    $('button[name="addItem"]').click(function (event) {
+        event.preventDefault();
+        console.log("within click");
+        var data = $(event.target).val();
+        // var businessName = "popeyes";
+        // var data = $('form').serialize();
+        // Add parameter "addItem" to POSTed form data. Button's name and value is
+        // POSTed only when clicked. Since "event.preventDefault();" prevents from
+        // actual clicking the button, following line will add parameter to form
+        // data.
+        //data += 'addItem';
+        $.post('/addToMyTrip/' + data, data, replaceItems);
+    });
+
+</script>
+
+<!--//ATTEMPT WITH REQUEST BODY-->
+<!--<script>-->
+    <!--function replaceItems (html) {-->
+        <!--$('#elementToReplace').replaceWith($(html));-->
+    <!--}-->
+
+    <!--$('button[name="addItem"]').click(function (event) {-->
+        <!--event.preventDefault();-->
+        <!--console.log("within click");-->
+        <!--var businessName = $(event.target).val();-->
+
+        <!--var tripToAdd = {-->
+            <!--"cityName": "default",-->
+            <!--"businessName": businessName,-->
+            <!--"url": "default"-->
+        <!--};-->
+
+        <!--$.ajax({-->
+            <!--type: "POST",-->
+            <!--contentType: 'application/json; charset=utf-8',-->
+            <!--dataType: 'json',-->
+            <!--url: "/addToMyTrip",-->
+            <!--data: JSON.stringify(tripToAdd), // Note it is important-->
+            <!--success: function (result) {-->
+                <!--replaceItems(result);-->
+            <!--}-->
+        <!--});-->
+    <!--});-->
+<!--</script>-->
+
+
+
+
+
+
 </body>
 </html>
