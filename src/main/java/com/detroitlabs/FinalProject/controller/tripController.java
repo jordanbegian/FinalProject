@@ -42,6 +42,11 @@ public class TripController {
         return "index";
     }
 
+    @RequestMapping("/account")
+    public String displayNewAccountPage(Model model){
+        return "newAccount";
+    }
+
     //WORKS WITH REQUEST PARAMS
     @PostMapping("/addToMyTrip/{businessName}")
     public String addPlaceToMyTripList(@PathVariable(name="businessName") String businessName,HttpServletRequest request, Model model){
