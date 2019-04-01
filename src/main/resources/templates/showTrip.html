@@ -182,6 +182,16 @@
                     <p th:text="'Destination: ' + ${tripEnd}">Start:</p>
                 </div>
             </div>
+
+            <a th:href="@{'/savetrip/' + ${tripStart} + '-' + ${tripEnd}}"  type="button" class="btn btn-info">
+                <button class="btn btn-primary">Save This Trip</button>
+            </a>
+
+            <!--<form id="myForm" method="get" th:action="@{'/savetrip/' + ${tripStart} + '-' + ${tripEnd}}">-->
+                <!--<input type="text" th:value="${tripStart}" id="tripStart" name="id"/>-->
+                <!--<input type="text" th:value="${tripEnd}" id="tripEnd" name="id"/>-->
+               <!--<button type="submit">Save This Trip</button>-->
+            <!--</form>-->
         </div>
     </div>
 </div>
