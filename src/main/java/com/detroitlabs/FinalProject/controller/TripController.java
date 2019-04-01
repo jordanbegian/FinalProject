@@ -88,13 +88,38 @@ public class TripController {
 //        }
 //    }
 
+    @RequestMapping("/recalltrip/{tripStart}-{tripEnd}")
+    public String recallShowTripPage(@PathVariable(name="tripStart") String tripStart, @PathVariable(name="tripEnd") String tripEnd, Model model, ModelMap modelMap) {
+
+         String tripStartPoint = tripStart;
+         String tripEndingPoint = tripEnd;
+
+         runLogicForShowTripPage(tripStartPoint, tripEndingPoint, model, modelMap);
+
+         return "showtrip";
+    }
+
 
     @RequestMapping("/showtrip")
-    public String displayTripPage(@ModelAttribute StepCoordinates gaslongitude, @ModelAttribute StepCoordinates gaslatitude, @ModelAttribute BlankTrip blankTrip, ModelMap modelMap, Model model){
+    public String displayTripPage(@ModelAttribute BlankTrip blankTrip, ModelMap modelMap, Model model){
         String tripStart = blankTrip.getStart();
         String tripEnd = blankTrip.getEnd();
         modelMap.put("tripStart", tripStart);
         modelMap.put("tripEnd", tripEnd);
+
+        runLogicForShowTripPage(tripStart, tripEnd, model, modelMap);
+
+        //Weather Info
+
+//        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
+//        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
+//        modelMap.put("mainWeatherData", mainWeatherData);
+
+
+        return "showtrip";
+    }
+
+    public void runLogicForShowTripPage(String tripStart, String tripEnd, Model model, ModelMap modelMap){
 
         //Google Directions
 
@@ -116,15 +141,8 @@ public class TripController {
         modelMap.put("tripCityPlaces", tripCityPlaces.getTripCityPlaces());
         modelMap.put("googleMapsKey", googleMapsKey);
 
-        //Weather Info
-
-//        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
-//        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
-//        modelMap.put("mainWeatherData", mainWeatherData);
-
-
-        return "showtrip";
     }
+
 
     public TripCityPlaces generateTripCityPlaces(ArrayList<String> filteredCities, YelpService yelpService){
         TripCityPlaces tripCityPlaces = new TripCityPlaces();
