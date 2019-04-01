@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.provider.HibernateUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,11 +27,11 @@ public class SavedTripController {
     SavedTripsRepository savedTripsRepository;
 
 
-    @RequestMapping("/create-saved-trip")
+    @RequestMapping("/savetrip/{tripStart}-{tripEnd}")
     @ResponseBody
-    public String createSavedTrip(long userid ,String startPoint, String endPoint) {
+    public String createSavedTrip(@PathVariable(name="tripStart") String tripStart, @PathVariable(name="tripEnd") String tripEnd) {
         try {
-            SavedTrip tripToSave = new SavedTrip(userid, startPoint, endPoint);
+            SavedTrip tripToSave = new SavedTrip(1, tripStart, tripEnd);
             savedTripsRepository.save(tripToSave);
         }
         catch (Exception ex) {

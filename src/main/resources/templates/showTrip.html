@@ -138,6 +138,13 @@
                 </div>
             </div>
 
+            <form id="myForm" method="get" th:action="@{'/savetrip/' + ${tripStart} + '-' + ${tripEnd}}">
+                <input type="text" th:value="${tripStart}" id="tripStart" name="id"/>
+                <input type="text" th:value="${tripEnd}" id="tripEnd" name="id"/>
+               <button type="submit">Save This Trip</button>
+            </form>
+
+
         </div>
     </div>
 </div>
