@@ -17,7 +17,7 @@
             <p th:text="'Trip End: ' + ${tripEnd}">trip End</p>
     <!-----------ACCORDION START----------->
             <div id="accordion">
-                <div class="card" th:each="cityPlaces, iStat : ${tripCityPlaces}">
+                <div class="card"
                     <div class="card-header" th:id="'heading_'+${iStat.index}">
                         <h5 class="mb-0">
             <!-----------CITY NAME BUTTON START----------->
