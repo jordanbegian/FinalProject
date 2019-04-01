@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -27,6 +28,9 @@ public class TripController {
 
     @Autowired
     WeatherService weatherService;
+
+    @Autowired
+    SavedTripController savedTripController;
 
     @Value("${GOOGLE_MAPS_KEY}")
     private String googleMapsKey;
@@ -46,6 +50,16 @@ public class TripController {
     public String displayNewAccountPage(Model model){
         model.addAttribute("userInfo", new UserInfo());
         return "newAccount";
+    }
+
+    @RequestMapping("/mytrips")
+    public String displayNewAccountPage(ModelMap modelMap){
+
+        Collection<SavedTrip> currentUsersTrips = savedTripController.getByUserid();
+
+        modelMap.put("currentUsersTrips", currentUsersTrips);
+
+        return "CurrentUsersTripsTemplate";
     }
 
     //WORKS WITH REQUEST PARAMS
