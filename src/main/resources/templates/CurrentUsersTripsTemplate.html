@@ -7,9 +7,11 @@
 <body>
 
 <h1>My Trips</h1>
-<ul th:each = "trip : ${currentUsersTrips}">
-    <li th:text="${trip.getStart()} + ' ---> ' + ${trip.getEnd()}"></li>
-</ul>
+<div th:each = "trip : ${currentUsersTrips}">
+  <a th:href="@{'/recalltrip/' + ${trip.getStart()} + '-' + ${trip.getEnd()} }">
+      <p th:text="${trip.getStart()} + ' ---> ' + ${trip.getEnd()}"></p>
+  </a>
+</div>
 
 <!--<div th:each = "trip : ${currentUsersTrips}">-->
 <!--<p th:text="${trip.getStart()}"></p>-->
