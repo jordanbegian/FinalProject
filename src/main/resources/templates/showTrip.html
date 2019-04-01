@@ -138,9 +138,15 @@
                 </div>
             </div>
 
-            <a th:href="@{'/savetrip/' + ${tripStart} + '-' + ${tripEnd}}"  type="button" class="btn btn-info">
+
+            <a type="button" class="btn btn-info" id="saveTripLink">
                 <button class="btn btn-primary">Save This Trip</button>
             </a>
+
+          <!--//THIS ONE WORKS!!!-->
+            <!--<a th:href="@{'/savetrip/' + ${tripStart} + '-' + ${tripEnd}}"  type="button" class="btn btn-info" id="saveTripLink">-->
+                <!--<button class="btn btn-primary">Save This Trip</button>-->
+            <!--</a>-->
 
             <!--<form id="myForm" method="get" th:action="@{'/savetrip/' + ${tripStart} + '-' + ${tripEnd}}">-->
                 <!--<input type="text" th:value="${tripStart}" id="tripStart" name="id"/>-->
@@ -182,6 +188,32 @@
         $.post('/addToMyTrip/' + data, data, replaceItems);
     });
 
+</script>
+
+<script th:inline="javascript">
+    $('#saveTripLink').click(function (event) {
+
+        let allPlaces = [];
+
+        $('.placeOnList').each(function(){
+            allPlaces.push("|" + $(this).text());
+        });
+
+       //let allPlaces = $('.placeOnList').text() + "|";
+
+        allPlacesString = allPlaces.join();
+        let formattedWaypoints= allPlacesString.substring(3);
+        formattedWaypoints = formattedWaypoints.split(",").join("");
+        formattedWaypoints = formattedWaypoints.split("-").join(" ");
+
+        let tripStart = /*[[${tripStart}]]*/ 'detroit';
+        let tripEnd = /*[[${tripEnd}]]*/ 'detroit';
+
+        console.log(tripStart, tripEnd, formattedWaypoints);
+        console.log("TWAS CLICKED");
+
+        $.post('/createTripToSave/' + tripStart + '/' + tripEnd + '/' + formattedWaypoints);
+    });
 </script>
 
 <!--//ATTEMPT WITH REQUEST BODY-->

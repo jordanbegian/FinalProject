@@ -23,12 +23,22 @@ public class SavedTrip {
     @Column(name="end")
     private String end;
 
+    @Column(name="waypoints")
+    private String waypoints;
+
     public SavedTrip() { }
 
     public SavedTrip(long userid, String start, String end) {
         this.userid = userid;
         this.start = start;
         this.end = end;
+    }
+
+    public SavedTrip(long userid, String start, String end, String waypoints) {
+        this.userid = userid;
+        this.start = start;
+        this.end = end;
+        this.waypoints = waypoints;
     }
 
 
@@ -62,6 +72,14 @@ public class SavedTrip {
 
     public void setEnd(String end) {
         this.end = end;
+    }
+
+    public String getWaypoints() {
+        return waypoints;
+    }
+
+    public void setWaypoints(String waypoints) {
+        this.waypoints = waypoints;
     }
 }
 

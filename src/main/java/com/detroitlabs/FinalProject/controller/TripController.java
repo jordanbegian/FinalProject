@@ -75,6 +75,7 @@ public class TripController {
         }
     }
 
+
 //ATTEMPT WITH REQUEST BODY
 //    @PostMapping("/addToMyTrip")
 //    public String addPlaceToMyTripList(@RequestBody TripToAdd tripToAdd, HttpServletRequest request, Model model){

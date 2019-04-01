@@ -40,6 +40,24 @@ public class SavedTripController {
         return "index";
     }
 
+    @RequestMapping("/createTripToSave/{tripStart}/{tripEnd}/{waypoints}")
+    @ResponseBody
+    public String createSavedTrip(@PathVariable(name="tripStart") String tripStart, @PathVariable(name="tripEnd") String tripEnd, @PathVariable(name="waypoints") String waypoints) {
+
+        String unformattedWaypoints = waypoints;
+        unformattedWaypoints.replaceAll("-", " ");
+
+        String formattedWaypoints =  unformattedWaypoints.replaceAll(" ", "|");
+
+        try {
+            SavedTrip tripToSave = new SavedTrip(1, tripStart, tripEnd, formattedWaypoints);
+            savedTripsRepository.save(tripToSave);
+        }
+        catch (Exception ex) {
+            return "Error creating the trip";
+        }
+        return "CurrentUsersTripsTemplate";
+    }
 
 
 //    @RequestMapping("/delete-saved-trip")
