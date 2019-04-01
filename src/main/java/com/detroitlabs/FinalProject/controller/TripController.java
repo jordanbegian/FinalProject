@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -32,6 +33,9 @@ public class TripController {
     @Autowired
     WeatherService weatherService;
 
+    @Autowired
+    SavedTripController savedTripController;
+
     @Value("${GOOGLE_MAPS_KEY}")
     private String googleMapsKey;
 
@@ -44,6 +48,13 @@ public class TripController {
     public String displayHomePage(Model model){
         model.addAttribute("blankTrip", new BlankTrip());
         return "index";
+    }
+
+    @RequestMapping("/mytrips")
+    public String displayCurrentUsersTripsPage(ModelMap modelMap){
+        Collection<SavedTrip> returnedTrips = savedTripController.getByUserid();
+        modelMap.put("currentUsersTrips", returnedTrips);
+        return "CurrentUsersTripsTemplate";
     }
 
     //WORKS WITH REQUEST PARAMS
@@ -74,42 +85,105 @@ public class TripController {
 //    }
 
 
+    @RequestMapping("/recalltrip/{tripStart}-{tripEnd}")
+    public String recallShowTripPage(@PathVariable(name="tripStart") String tripStart, @PathVariable(name="tripEnd") String tripEnd, Model model, ModelMap modelMap) {
+
+        String tripStartPoint = tripStart;
+        String tripEndingPoint = tripEnd;
+
+        runLogicForShowTripPage(tripStartPoint, tripEndingPoint, model, modelMap);
+
+        return "showtrip";
+    }
+
+
     @RequestMapping("/showtrip")
     public String displayTripPage(@ModelAttribute StepCoordinates gaslongitude, @ModelAttribute StepCoordinates gaslatitude, @ModelAttribute BlankTrip blankTrip, ModelMap modelMap, Model model){
-       String tripStart = blankTrip.getStart();
-       String tripEnd = blankTrip.getEnd();
-       modelMap.put("tripStart", tripStart);
-       modelMap.put("tripEnd", tripEnd);
+            String tripStart = blankTrip.getStart();
+            String tripEnd = blankTrip.getEnd();
+            modelMap.put("tripStart", tripStart);
+            modelMap.put("tripEnd", tripEnd);
 
-       //Google Directions
+            runLogicForShowTripPage(tripStart, tripEnd, model, modelMap);
 
-       DirectionSet directionSet =  directionsService.fetchDirectionSetForRoute(tripStart, tripEnd);
-       ArrayList<Step> tripSteps = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps();
-
-       ArrayList<String> cityNames = getCityNamesByStepCoordinates(tripSteps);
-
-       ArrayList<String> filteredCityNames = filterDuplicateCities(cityNames);
-
-       TripCityPlaces tripCityPlaces = generateTripCityPlaces(filteredCityNames, yelpService);
-
-       allPlaces.add(new TripToAdd("Detroit", "Detroit Labs"));
-       model.addAttribute("allPlaces", allPlaces);
-
-       modelMap.put("tripSteps", tripSteps);
-       modelMap.put("allCityNames", cityNames);
-       modelMap.put("filteredCityNames",filteredCityNames);
-       modelMap.put("tripCityPlaces", tripCityPlaces.getTripCityPlaces());
-       modelMap.put("googleMapsKey", googleMapsKey);
-
-      //Weather Info
+            //Weather Info
 
 //        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
 //        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
 //        modelMap.put("mainWeatherData", mainWeatherData);
 
 
-        return "showtrip";
+            return "showtrip";
+        }
+
+
+
+        public void runLogicForShowTripPage(String tripStart, String tripEnd, Model model, ModelMap modelMap){
+            //Google Directions
+
+            DirectionSet directionSet =  directionsService.fetchDirectionSetForRoute(tripStart, tripEnd);
+            ArrayList<Step> tripSteps = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps();
+
+            ArrayList<String> cityNames = getCityNamesByStepCoordinates(tripSteps);
+
+            ArrayList<String> filteredCityNames = filterDuplicateCities(cityNames);
+
+            TripCityPlaces tripCityPlaces = generateTripCityPlaces(filteredCityNames, yelpService);
+
+            allPlaces.add(new TripToAdd("Detroit", "Detroit Labs"));
+            model.addAttribute("allPlaces", allPlaces);
+
+            modelMap.put("tripSteps", tripSteps);
+            modelMap.put("allCityNames", cityNames);
+            modelMap.put("filteredCityNames",filteredCityNames);
+            modelMap.put("tripCityPlaces", tripCityPlaces.getTripCityPlaces());
+            modelMap.put("googleMapsKey", googleMapsKey);
+
+            //Weather Info
+
+//        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
+//        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
+//        modelMap.put("mainWeatherData", mainWeatherData);
+
     }
+
+
+//    @RequestMapping("/showtrip")
+//    public String displayTripPage(@ModelAttribute StepCoordinates gaslongitude, @ModelAttribute StepCoordinates gaslatitude, @ModelAttribute BlankTrip blankTrip, ModelMap modelMap, Model model){
+//       String tripStart = blankTrip.getStart();
+//       String tripEnd = blankTrip.getEnd();
+//       modelMap.put("tripStart", tripStart);
+//       modelMap.put("tripEnd", tripEnd);
+//
+//       //Google Directions
+//
+//       DirectionSet directionSet =  directionsService.fetchDirectionSetForRoute(tripStart, tripEnd);
+//       ArrayList<Step> tripSteps = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps();
+//
+//       ArrayList<String> cityNames = getCityNamesByStepCoordinates(tripSteps);
+//
+//       ArrayList<String> filteredCityNames = filterDuplicateCities(cityNames);
+//
+//       TripCityPlaces tripCityPlaces = generateTripCityPlaces(filteredCityNames, yelpService);
+//
+//       allPlaces.add(new TripToAdd("Detroit", "Detroit Labs"));
+//       model.addAttribute("allPlaces", allPlaces);
+//
+//       modelMap.put("tripSteps", tripSteps);
+//       modelMap.put("allCityNames", cityNames);
+//       modelMap.put("filteredCityNames",filteredCityNames);
+//       modelMap.put("tripCityPlaces", tripCityPlaces.getTripCityPlaces());
+//       modelMap.put("googleMapsKey", googleMapsKey);
+//
+//      //Weather Info
+//
+////        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
+////        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
+////        modelMap.put("mainWeatherData", mainWeatherData);
+//
+//
+//        return "showtrip";
+//    }
 
     public TripCityPlaces generateTripCityPlaces(ArrayList<String> filteredCities, YelpService yelpService){
         TripCityPlaces tripCityPlaces = new TripCityPlaces();
