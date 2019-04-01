@@ -1,6 +1,12 @@
 package com.detroitlabs.FinalProject.controller;
 
+import com.detroitlabs.FinalProject.model.*;
+import com.detroitlabs.FinalProject.service.DirectionsService;
+import com.detroitlabs.FinalProject.service.GeoCodingService;
+import com.detroitlabs.FinalProject.service.WeatherService;
+import com.detroitlabs.FinalProject.service.YelpService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
