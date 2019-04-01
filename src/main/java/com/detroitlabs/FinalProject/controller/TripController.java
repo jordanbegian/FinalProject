@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -23,10 +24,13 @@ public class TripController {
     private GeoCodingService geoCodingService;
 
     @Autowired
-   private DirectionsService directionsService;
+    private DirectionsService directionsService;
 
     @Autowired
     WeatherService weatherService;
+
+    @Autowired
+    SavedTripController savedTripController;
 
     @Value("${GOOGLE_MAPS_KEY}")
     private String googleMapsKey;
@@ -40,6 +44,22 @@ public class TripController {
     public String displayHomePage(Model model){
         model.addAttribute("blankTrip", new BlankTrip());
         return "index";
+    }
+
+    @RequestMapping("/account")
+    public String displayNewAccountPage(Model model){
+        model.addAttribute("userInfo", new UserInfo());
+        return "newAccount";
+    }
+
+    @RequestMapping("/mytrips")
+    public String displayNewAccountPage(ModelMap modelMap){
+
+        Collection<SavedTrip> currentUsersTrips = savedTripController.getByUserid();
+
+        modelMap.put("currentUsersTrips", currentUsersTrips);
+
+        return "CurrentUsersTripsTemplate";
     }
 
     //WORKS WITH REQUEST PARAMS
@@ -71,32 +91,32 @@ public class TripController {
 
     @RequestMapping("/showtrip")
     public String displayTripPage(@ModelAttribute StepCoordinates gaslongitude, @ModelAttribute StepCoordinates gaslatitude, @ModelAttribute BlankTrip blankTrip, ModelMap modelMap, Model model){
-       String tripStart = blankTrip.getStart();
-       String tripEnd = blankTrip.getEnd();
-       modelMap.put("tripStart", tripStart);
-       modelMap.put("tripEnd", tripEnd);
+        String tripStart = blankTrip.getStart();
+        String tripEnd = blankTrip.getEnd();
+        modelMap.put("tripStart", tripStart);
+        modelMap.put("tripEnd", tripEnd);
 
-       //Google Directions
+        //Google Directions
 
-       DirectionSet directionSet =  directionsService.fetchDirectionSetForRoute(tripStart, tripEnd);
-       ArrayList<Step> tripSteps = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps();
+        DirectionSet directionSet =  directionsService.fetchDirectionSetForRoute(tripStart, tripEnd);
+        ArrayList<Step> tripSteps = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps();
 
-       ArrayList<String> cityNames = getCityNamesByStepCoordinates(tripSteps);
+        ArrayList<String> cityNames = getCityNamesByStepCoordinates(tripSteps);
 
-       ArrayList<String> filteredCityNames = filterDuplicateCities(cityNames);
+        ArrayList<String> filteredCityNames = filterDuplicateCities(cityNames);
 
-       TripCityPlaces tripCityPlaces = generateTripCityPlaces(filteredCityNames, yelpService);
+        TripCityPlaces tripCityPlaces = generateTripCityPlaces(filteredCityNames, yelpService);
 
-       allPlaces.add(new TripToAdd("Detroit", "Detroit Labs"));
-       model.addAttribute("allPlaces", allPlaces);
+        allPlaces.add(new TripToAdd("Detroit", "Detroit Labs"));
+        model.addAttribute("allPlaces", allPlaces);
 
-       modelMap.put("tripSteps", tripSteps);
-       modelMap.put("allCityNames", cityNames);
-       modelMap.put("filteredCityNames",filteredCityNames);
-       modelMap.put("tripCityPlaces", tripCityPlaces.getTripCityPlaces());
-       modelMap.put("googleMapsKey", googleMapsKey);
+        modelMap.put("tripSteps", tripSteps);
+        modelMap.put("allCityNames", cityNames);
+        modelMap.put("filteredCityNames",filteredCityNames);
+        modelMap.put("tripCityPlaces", tripCityPlaces.getTripCityPlaces());
+        modelMap.put("googleMapsKey", googleMapsKey);
 
-      //Weather Info
+        //Weather Info
 
 //        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
 //        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
@@ -137,16 +157,17 @@ public class TripController {
 
         for(Step step: tripSteps){
 
-           String latAndLong = step.getStartLocation().getFormattedLatAndLong();
+            String latAndLong = step.getStartLocation().getFormattedLatAndLong();
 
-           GeoLocationCityInfo cityRawJSONInfo = geoCodingService.fetchCityInfoByCoordinate(latAndLong);
+            GeoLocationCityInfo cityRawJSONInfo = geoCodingService.fetchCityInfoByCoordinate(latAndLong);
 
-           String cityName = cityRawJSONInfo.getPlusCode().parseCityNameFromCode();
+            String cityName = cityRawJSONInfo.getPlusCode().parseCityNameFromCode();
 
-           allCities.add(cityName);
+            allCities.add(cityName);
         }
 
         return allCities;
     }
 
 }
+
