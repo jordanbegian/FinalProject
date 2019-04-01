@@ -9,10 +9,10 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container mx-auto">
     <div class="row">
 <!-----------COLUMN 1----------->
-        <div class="col-sm">
+        <div class="col-sm-4 p-0">
             <p th:text="'Trip Start: ' + ${tripStart}">trip start</p>
             <p th:text="'Trip End: ' + ${tripEnd}">trip End</p>
     <!-----------ACCORDION START----------->
@@ -70,42 +70,87 @@
                                 <div class="tab-pane fade show active" th:id="'pills-restaurants-'+${iStat.index}"
                                      role="tabpanel" th:attr="aria-labelledby='pills-restaurants-tab-'+${iStat.index}">
                     <!-----------RESTAURANT INFO----------->
-                                    <ul th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}">
-                                        <li th:text="${restaurant.getName()}"></li>
-                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${restaurant.getLowercaseName()}" th:value="${restaurant.getLowercaseName()}">Add to my trip</button>
-                                    </ul>
+                                        <div th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}"
+                                             style="border-bottom: solid; border-width: thin; border-color: #000000;">
+                                            <h5 class="card-title" th:text="${restaurant.getName()}"></h5>
+                                            <h6 class="card-subtitle mb-2 text-muted" th:text="${restaurant.getRating()} +
+                                            ' Stars | ' + ${restaurant.getReviewCount()} + ' Reviews'"></h6>
+                                            <a th:href="${restaurant.getUrl()}" class="card-link">
+                                                <img src="YelpImages/Logo/Yelp_trademark_RGB_outline.png"
+                                                     style="width: 20%; height: 20%;">
+                                            </a>
+                                            <button type="submit" name="addItem" class="btn btn-primary btn-sm"
+                                                    th:data="${restaurant.getLowercaseName()}"
+                                            th:value="${restaurant.getLowercaseName()}">Add to my trip</button>
+                                        </div>
                                 </div>
                                 <div class="tab-pane fade" th:id="'pills-bars-'+${iStat.index}"
                                      role="tabpanel" th:attr="aria-labelledby='pills-bars-tab-'+${iStat.index}">
                     <!-----------BAR INFO----------->
-                                    <ul th:each="bar : ${cityPlaces.getBars().getBusinesses()}">
-                                        <li th:text="${bar.getName()}"></li>
-                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${bar.getLowercaseName()}" th:value="${bar.getLowercaseName()}">Add to my trip</button>
-                                    </ul>
+                                    <div th:each="bar : ${cityPlaces.getBars().getBusinesses()}"
+                                         style="border-bottom: solid; border-width: thin; border-color: #000000;">
+                                        <h5 class="card-title" th:text="${bar.getName()}"></h5>
+                                        <h6 class="card-subtitle mb-2 text-muted" th:text="${bar.getRating()} +
+                                            ' Stars | ' + ${bar.getReviewCount()} + ' Reviews'"></h6>
+                                        <a th:href="${bar.getUrl()}" class="card-link">
+                                            <img src="YelpImages/Logo/Yelp_trademark_RGB_outline.png"
+                                                 style="width: 20%; height: 20%;">
+                                        </a>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm"
+                                                th:data="${bar.getLowercaseName()}"
+                                                th:value="${bar.getLowercaseName()}">Add to my trip</button>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" th:id="'pills-hotels-'+${iStat.index}"
                                      role="tabpanel" th:attr="aria-labelledby='pills-hotels-tab-'+${iStat.index}">
                     <!-----------HOTEL INFO----------->
-                                    <ul th:each="hotel : ${cityPlaces.getHotels().getBusinesses()}">
-                                        <li th:text="${hotel.getName()}"></li>
-                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${hotel.getLowercaseName()}" th:value="${hotel.getLowercaseName()}">Add to my trip</button>
-                                    </ul>
+                                    <div th:each="hotel : ${cityPlaces.getHotels().getBusinesses()}"
+                                         style="border-bottom: solid; border-width: thin; border-color: #000000;">
+                                        <h5 class="card-title" th:text="${hotel.getName()}"></h5>
+                                        <h6 class="card-subtitle mb-2 text-muted" th:text="${hotel.getRating()} +
+                                            ' Stars | ' + ${hotel.getReviewCount()} + ' Reviews'"></h6>
+                                        <a th:href="${hotel.getUrl()}" class="card-link">
+                                            <img src="YelpImages/Logo/Yelp_trademark_RGB_outline.png"
+                                                 style="width: 20%; height: 20%;">
+                                        </a>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm"
+                                                th:data="${hotel.getLowercaseName()}"
+                                                th:value="${hotel.getLowercaseName()}">Add to my trip</button>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" th:id="'pills-entertainment-'+${iStat.index}"
                                      role="tabpanel" th:attr="aria-labelledby='pills-entertainment-tab-'+${iStat.index}">
                     <!-----------ENTERTAINMENT INFO----------->
-                                    <ul th:each="entertainment : ${cityPlaces.getEntertainment().getBusinesses()}">
-                                        <li th:text="${entertainment.getName()}"></li>
-                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${entertainment.getLowercaseName()}" th:value="${entertainment.getLowercaseName()}">Add to my trip</button>
-                                    </ul>
+                                    <div th:each="entertainment : ${cityPlaces.getEntertainment().getBusinesses()}"
+                                         style="border-bottom: solid; border-width: thin; border-color: #000000;">
+                                        <h5 class="card-title" th:text="${entertainment.getName()}"></h5>
+                                        <h6 class="card-subtitle mb-2 text-muted" th:text="${entertainment.getRating()} +
+                                            ' Stars | ' + ${entertainment.getReviewCount()} + ' Reviews'"></h6>
+                                        <a th:href="${entertainment.getUrl()}" class="card-link">
+                                            <img src="YelpImages/Logo/Yelp_trademark_RGB_outline.png"
+                                                 style="width: 20%; height: 20%;">
+                                        </a>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm"
+                                                th:data="${entertainment.getLowercaseName()}"
+                                                th:value="${entertainment.getLowercaseName()}">Add to my trip</button>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" th:id="'pills-gas-'+${iStat.index}"
                                      role="tabpanel" th:attr="aria-labelledby='pills-gas-tab-'+${iStat.index}">
                     <!-----------GAS STATION INFO----------->
-                                    <ul th:each="gas : ${cityPlaces.getGasStations().getBusinesses()}">
-                                        <li th:text="${gas.getName()}"></li>
-                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm" th:data="${gas.getLowercaseName()}" th:value="${gas.getLowercaseName()}">Add to my trip</button>
-                                    </ul>
+                                    <div th:each="gas : ${cityPlaces.getGasStations().getBusinesses()}"
+                                         style="border-bottom: solid; border-width: thin; border-color: #000000;">
+                                        <h5 class="card-title" th:text="${gas.getName()}"></h5>
+                                        <h6 class="card-subtitle mb-2 text-muted" th:text="${gas.getRating()} +
+                                            ' Stars | ' + ${gas.getReviewCount()} + ' Reviews'"></h6>
+                                        <a th:href="${gas.getUrl()}" class="card-link">
+                                            <img src="YelpImages/Logo/Yelp_trademark_RGB_outline.png"
+                                                 style="width: 20%; height: 20%;">
+                                        </a>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm"
+                                                th:data="${gas.getLowercaseName()}"
+                                                th:value="${gas.getLowercaseName()}">Add to my trip</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -118,13 +163,13 @@
 <!-----------COLUMN 2----------->
         <div class="col-sm">
         <!-----------MAP----------->
-            <iframe width="600" height="450" frameborder="0" style="border:0"
+            <iframe width="525" height="375" frameborder="0" style="border:0"
                     th:src="@{'https://www.google.com/maps/embed/v1/directions?origin=' + ${tripStart} + '&destination='
         + ${tripEnd} + '&key=' + ${googleMapsKey}}"
                     allowfullscreen></iframe>
         </div>
 <!-----------COLUMN 3----------->
-        <div class="col-sm">
+        <div class="col-sm p-0">
 
             <h1>Your Trip</h1>
 
@@ -138,6 +183,15 @@
                 </div>
             </div>
 
+            <a th:href="@{'/savetrip/' + ${tripStart} + '-' + ${tripEnd}}"  type="button" class="btn btn-info">
+                <button class="btn btn-primary">Save This Trip</button>
+            </a>
+
+            <!--<form id="myForm" method="get" th:action="@{'/savetrip/' + ${tripStart} + '-' + ${tripEnd}}">-->
+                <!--<input type="text" th:value="${tripStart}" id="tripStart" name="id"/>-->
+                <!--<input type="text" th:value="${tripEnd}" id="tripEnd" name="id"/>-->
+               <!--<button type="submit">Save This Trip</button>-->
+            <!--</form>-->
         </div>
     </div>
 </div>
