@@ -8,7 +8,7 @@
 
     <h1>My Trips</h1>
     <div th:each = "trip : ${currentUsersTrips}">
-      <a th:href="@{'/recalltrip/' + ${trip.getStart()} + '-' + ${trip.getEnd()} }">
+      <a th:href="@{'/recalltrip/' + ${trip.getStart()} + '-' + ${trip.getEnd()}}">
           <p th:text="${trip.getStart()} + ' ---> ' + ${trip.getEnd()}"></p>
       </a>
     </div>

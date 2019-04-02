@@ -11,28 +11,28 @@
 
 <div class="container mx-auto">
     <div class="row">
-<!-----------COLUMN 1----------->
+        <!-----------COLUMN 1----------->
         <div class="col-sm-4 p-0">
             <p th:text="'Trip Start: ' + ${tripStart}">trip start</p>
             <p th:text="'Trip End: ' + ${tripEnd}">trip End</p>
-    <!-----------ACCORDION START----------->
+            <!-----------ACCORDION START----------->
             <div id="accordion">
                 <div class="card" th:each="cityPlaces, iStat : ${tripCityPlaces}">
                     <div class="card-header" th:id="'heading_'+${iStat.index}">
                         <h5 class="mb-0">
-            <!-----------CITY NAME BUTTON START----------->
+                            <!-----------CITY NAME BUTTON START----------->
                             <button class="btn btn-link" data-toggle="collapse"
                                     th:attr="data-target='#collapse_'+${iStat.index}, aria-controls='collapse_'+${iStat.index}"
                                     aria-expanded="false" th:text="${cityPlaces.getCityName()}"></button>
-            <!-----------CITY NAME BUTTON END----------->
+                            <!-----------CITY NAME BUTTON END----------->
                         </h5>
                     </div>
 
                     <div th:id="'collapse_'+${iStat.index}" class="collapse"
                          th:attr="aria-labelledby='heading_'+${iStat.index}" data-parent="#accordion">
-            <!-----------CARD BODY START----------->
+                        <!-----------CARD BODY START----------->
                         <div class="card-body">
-                <!-----------NAV PILLS START----------->
+                            <!-----------NAV PILLS START----------->
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" th:id="'pills-restaurants-tab-'+${iStat.index}"
@@ -65,28 +65,28 @@
                                        aria-selected="false">Gas Stations</a>
                                 </li>
                             </ul>
-                <!-----------NAV PILLS END----------->
+                            <!-----------NAV PILLS END----------->
                             <div class="tab-content" id="pills-tabContent">
                                 <div class="tab-pane fade show active" th:id="'pills-restaurants-'+${iStat.index}"
                                      role="tabpanel" th:attr="aria-labelledby='pills-restaurants-tab-'+${iStat.index}">
-                    <!-----------RESTAURANT INFO----------->
-                                        <div th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}"
-                                             style="border-bottom: solid; border-width: thin; border-color: #000000;">
-                                            <h5 class="card-title" th:text="${restaurant.getName()}"></h5>
-                                            <h6 class="card-subtitle mb-2 text-muted" th:text="${restaurant.getRating()} +
+                                    <!-----------RESTAURANT INFO----------->
+                                    <div th:each="restaurant : ${cityPlaces.getRestaurants().getBusinesses()}"
+                                         style="border-bottom: solid; border-width: thin; border-color: #000000;">
+                                        <h5 class="card-title" th:text="${restaurant.getName()}"></h5>
+                                        <h6 class="card-subtitle mb-2 text-muted" th:text="${restaurant.getRating()} +
                                             ' Stars | ' + ${restaurant.getReviewCount()} + ' Reviews'"></h6>
-                                            <a th:href="${restaurant.getUrl()}" class="card-link">
-                                                <img src="YelpImages/Logo/Yelp_trademark_RGB_outline.png"
-                                                     style="width: 20%; height: 20%;">
-                                            </a>
-                                            <button type="submit" name="addItem" class="btn btn-primary btn-sm"
-                                                    th:data="${restaurant.getLowercaseName()}"
-                                            th:value="${restaurant.getLowercaseName()}">Add to my trip</button>
-                                        </div>
+                                        <a th:href="${restaurant.getUrl()}" class="card-link">
+                                            <img src="YelpImages/Logo/Yelp_trademark_RGB_outline.png"
+                                                 style="width: 20%; height: 20%;">
+                                        </a>
+                                        <button type="submit" name="addItem" class="btn btn-primary btn-sm"
+                                                th:data="${restaurant.getLowercaseName()}"
+                                                th:value="${restaurant.getLowercaseName()}">Add to my trip</button>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" th:id="'pills-bars-'+${iStat.index}"
                                      role="tabpanel" th:attr="aria-labelledby='pills-bars-tab-'+${iStat.index}">
-                    <!-----------BAR INFO----------->
+                                    <!-----------BAR INFO----------->
                                     <div th:each="bar : ${cityPlaces.getBars().getBusinesses()}"
                                          style="border-bottom: solid; border-width: thin; border-color: #000000;">
                                         <h5 class="card-title" th:text="${bar.getName()}"></h5>
@@ -103,7 +103,7 @@
                                 </div>
                                 <div class="tab-pane fade" th:id="'pills-hotels-'+${iStat.index}"
                                      role="tabpanel" th:attr="aria-labelledby='pills-hotels-tab-'+${iStat.index}">
-                    <!-----------HOTEL INFO----------->
+                                    <!-----------HOTEL INFO----------->
                                     <div th:each="hotel : ${cityPlaces.getHotels().getBusinesses()}"
                                          style="border-bottom: solid; border-width: thin; border-color: #000000;">
                                         <h5 class="card-title" th:text="${hotel.getName()}"></h5>
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="tab-pane fade" th:id="'pills-entertainment-'+${iStat.index}"
                                      role="tabpanel" th:attr="aria-labelledby='pills-entertainment-tab-'+${iStat.index}">
-                    <!-----------ENTERTAINMENT INFO----------->
+                                    <!-----------ENTERTAINMENT INFO----------->
                                     <div th:each="entertainment : ${cityPlaces.getEntertainment().getBusinesses()}"
                                          style="border-bottom: solid; border-width: thin; border-color: #000000;">
                                         <h5 class="card-title" th:text="${entertainment.getName()}"></h5>
@@ -137,7 +137,7 @@
                                 </div>
                                 <div class="tab-pane fade" th:id="'pills-gas-'+${iStat.index}"
                                      role="tabpanel" th:attr="aria-labelledby='pills-gas-tab-'+${iStat.index}">
-                    <!-----------GAS STATION INFO----------->
+                                    <!-----------GAS STATION INFO----------->
                                     <div th:each="gas : ${cityPlaces.getGasStations().getBusinesses()}"
                                          style="border-bottom: solid; border-width: thin; border-color: #000000;">
                                         <h5 class="card-title" th:text="${gas.getName()}"></h5>
@@ -154,21 +154,21 @@
                                 </div>
                             </div>
                         </div>
-            <!-----------CARD BODY END----------->
+                        <!-----------CARD BODY END----------->
                     </div>
                 </div>
             </div>
-    <!-----------ACCORDION END----------->
+            <!-----------ACCORDION END----------->
         </div>
-<!-----------COLUMN 2----------->
+        <!-----------COLUMN 2----------->
         <div class="col-sm">
-        <!-----------MAP----------->
+            <!-----------MAP----------->
             <iframe width="525" height="375" frameborder="0" style="border:0"
                     th:src="@{'https://www.google.com/maps/embed/v1/directions?origin=' + ${tripStart} + '&destination='
-        + ${tripEnd} + '&key=' + ${googleMapsKey}}"
+        + ${tripEnd} + '&waypoints=' + ${waypoints} '&key=' + ${googleMapsKey}}"
                     allowfullscreen></iframe>
         </div>
-<!-----------COLUMN 3----------->
+        <!-----------COLUMN 3----------->
         <div class="col-sm p-0">
 
             <h1>Your Trip</h1>
@@ -177,7 +177,7 @@
                 <div>
                     <p th:text="'Trip Start: ' + ${tripStart}">Start:</p>
                     <ul id="elementToReplace" th:fragment="tripList" th:each="place : ${allPlaces}" class="list-group list-group-flush" style="width: 200px;">
-                            <li class="list-group-item placeOnList" th:text="${place.getBusinessName()}">Business name</li>
+                        <li class="list-group-item placeOnList" th:text="${place.getBusinessName()}">Business name</li>
                     </ul>
                     <p th:text="'Destination: ' + ${tripEnd}">Start:</p>
                 </div>
@@ -188,27 +188,27 @@
                 <button class="btn btn-primary">Save This Trip</button>
             </a>
 
-          <!--//THIS ONE WORKS!!!-->
+            <!--//THIS ONE WORKS!!!-->
             <!--<a th:href="@{'/savetrip/' + ${tripStart} + '-' + ${tripEnd}}"  type="button" class="btn btn-info" id="saveTripLink">-->
-                <!--<button class="btn btn-primary">Save This Trip</button>-->
+            <!--<button class="btn btn-primary">Save This Trip</button>-->
             <!--</a>-->
 
             <!--<form id="myForm" method="get" th:action="@{'/savetrip/' + ${tripStart} + '-' + ${tripEnd}}">-->
-                <!--<input type="text" th:value="${tripStart}" id="tripStart" name="id"/>-->
-                <!--<input type="text" th:value="${tripEnd}" id="tripEnd" name="id"/>-->
-               <!--<button type="submit">Save This Trip</button>-->
+            <!--<input type="text" th:value="${tripStart}" id="tripStart" name="id"/>-->
+            <!--<input type="text" th:value="${tripEnd}" id="tripEnd" name="id"/>-->
+            <!--<button type="submit">Save This Trip</button>-->
             <!--</form>-->
         </div>
     </div>
 </div>
 
 <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"-->
-        <!--integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+<!--integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  
+
 <!--//WORKS WITH PATH VARIABLES -->
 <script>
     function replaceItems (html) {
@@ -242,7 +242,7 @@
             allPlaces.push($(this).text());
         });
 
-       //let allPlaces = $('.placeOnList').text() + "|";
+        //let allPlaces = $('.placeOnList').text() + "|";
 
         allPlacesString = allPlaces.join();
         let formattedWaypoints= allPlacesString.substring(3);
@@ -261,32 +261,32 @@
 
 <!--//ATTEMPT WITH REQUEST BODY-->
 <!--<script>-->
-    <!--function replaceItems (html) {-->
-        <!--$('#elementToReplace').replaceWith($(html));-->
-    <!--}-->
+<!--function replaceItems (html) {-->
+<!--$('#elementToReplace').replaceWith($(html));-->
+<!--}-->
 
-    <!--$('button[name="addItem"]').click(function (event) {-->
-        <!--event.preventDefault();-->
-        <!--console.log("within click");-->
-        <!--var businessName = $(event.target).val();-->
+<!--$('button[name="addItem"]').click(function (event) {-->
+<!--event.preventDefault();-->
+<!--console.log("within click");-->
+<!--var businessName = $(event.target).val();-->
 
-        <!--var tripToAdd = {-->
-            <!--"cityName": "default",-->
-            <!--"businessName": businessName,-->
-            <!--"url": "default"-->
-        <!--};-->
+<!--var tripToAdd = {-->
+<!--"cityName": "default",-->
+<!--"businessName": businessName,-->
+<!--"url": "default"-->
+<!--};-->
 
-        <!--$.ajax({-->
-            <!--type: "POST",-->
-            <!--contentType: 'application/json; charset=utf-8',-->
-            <!--dataType: 'json',-->
-            <!--url: "/addToMyTrip",-->
-            <!--data: JSON.stringify(tripToAdd), // Note it is important-->
-            <!--success: function (result) {-->
-                <!--replaceItems(result);-->
-            <!--}-->
-        <!--});-->
-    <!--});-->
+<!--$.ajax({-->
+<!--type: "POST",-->
+<!--contentType: 'application/json; charset=utf-8',-->
+<!--dataType: 'json',-->
+<!--url: "/addToMyTrip",-->
+<!--data: JSON.stringify(tripToAdd), // Note it is important-->
+<!--success: function (result) {-->
+<!--replaceItems(result);-->
+<!--}-->
+<!--});-->
+<!--});-->
 <!--</script>-->
 
 
