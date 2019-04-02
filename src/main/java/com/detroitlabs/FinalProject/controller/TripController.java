@@ -32,6 +32,9 @@ public class TripController {
     @Autowired
     PictureService pictureService;
 
+    @Autowired
+    Urls urls;
+
 //    @Autowired
 //    WeatherService weatherService;
 
@@ -150,9 +153,24 @@ public class TripController {
        //Gas Station Info
 
 
-//      PictureWrapper pictureWrapper = pictureService.fetchPictureByCity(tripEnd);
-//      List<PictureResults> pictureResults = pictureWrapper.getPictureResults();
-//      modelMap.put("pictureResults", pictureResults);
+      PictureWrapper pictureWrapper = pictureService.fetchPictureByCity(tripEnd);
+      List<PictureResults> pictureResults = pictureWrapper.getPictureResults();
+      modelMap.put("pictureResults", pictureResults);
+
+        List<PictureResults> pictureLoop = new ArrayList<>();
+        for (int i = 0; i <= 9; i++) {
+            if (pictureResults.size() == 0) {
+                PictureResults noPictures = new PictureResults();
+                Urls noImmage = new Urls();
+                noImmage.setRegular("No Results");
+                pictureLoop.add(noPictures);
+            } else if (pictureResults.size() <= 9) {
+                pictureLoop.add(pictureResults.get(0));
+            } else {
+                pictureLoop.add(pictureResults.get(i));
+            }
+        }
+        modelMap.put("pictureLoop", pictureLoop);
 
 
 
