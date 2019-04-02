@@ -239,14 +239,14 @@
         let allPlaces = [];
 
         $('.placeOnList').each(function(){
-            allPlaces.push("|" + $(this).text());
+            allPlaces.push($(this).text());
         });
 
        //let allPlaces = $('.placeOnList').text() + "|";
 
         allPlacesString = allPlaces.join();
         let formattedWaypoints= allPlacesString.substring(3);
-        formattedWaypoints = formattedWaypoints.split(",").join("");
+        formattedWaypoints = formattedWaypoints.split(",").join("|");
         formattedWaypoints = formattedWaypoints.split("-").join(" ");
 
         let tripStart = /*[[${tripStart}]]*/ 'detroit';
