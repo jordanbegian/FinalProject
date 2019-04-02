@@ -3,7 +3,7 @@ package com.detroitlabs.FinalProject.controller;
 import com.detroitlabs.FinalProject.model.*;
 import com.detroitlabs.FinalProject.service.DirectionsService;
 import com.detroitlabs.FinalProject.service.GeoCodingService;
-import com.detroitlabs.FinalProject.service.WeatherService;
+import com.detroitlabs.FinalProject.service.PictureService;
 import com.detroitlabs.FinalProject.service.YelpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,10 +31,21 @@ public class TripController {
    private DirectionsService directionsService;
 
     @Autowired
-    WeatherService weatherService;
+    PictureWrapper pictureWrapper;
+
+    @Autowired
+    PictureService pictureService;
+
+    @Autowired
+    Urls urls;
+
+//    @Autowired
+//    WeatherService weatherService;
 
     @Autowired
     SavedTripController savedTripController;
+
+
 
     @Value("${GOOGLE_MAPS_KEY}")
     private String googleMapsKey;
@@ -56,6 +67,13 @@ public class TripController {
         modelMap.put("currentUsersTrips", returnedTrips);
         return "CurrentUsersTripsTemplate";
     }
+
+    @RequestMapping("/account")
+    public String displayNewAccountPage(Model model){
+        model.addAttribute("userInfo", new UserInfo());
+        return "newAccount";
+    }
+
 
     //WORKS WITH REQUEST PARAMS
     @PostMapping("/addToMyTrip/{businessName}")
@@ -138,6 +156,26 @@ public class TripController {
 
             TripCityPlaces tripCityPlaces = generateTripCityPlaces(filteredCityNames, yelpService);
 
+
+            PictureWrapper pictureWrapper = pictureService.fetchPictureByCity(tripEnd);
+            List<PictureResults> pictureResults = pictureWrapper.getPictureResults();
+            modelMap.put("pictureResults", pictureResults);
+
+            List<PictureResults> pictureLoop = new ArrayList<>();
+            for (int i = 0; i <= 9; i++) {
+                if (pictureResults.size() == 0) {
+                    PictureResults noPictures = new PictureResults();
+                    Urls noImmage = new Urls();
+                    noImmage.setRegular("No Results");
+                    pictureLoop.add(noPictures);
+                } else if (pictureResults.size() <= 9) {
+                    pictureLoop.add(pictureResults.get(0));
+                } else {
+                    pictureLoop.add(pictureResults.get(i));
+                }
+            }
+            modelMap.put("pictureLoop", pictureLoop);
+
             allPlaces.add(new TripToAdd("Detroit", "Detroit Labs"));
             model.addAttribute("allPlaces", allPlaces);
 
@@ -154,6 +192,10 @@ public class TripController {
 //        modelMap.put("mainWeatherData", mainWeatherData);
 
     }
+       //Gas Station Info
+
+
+
 
 
 //    @RequestMapping("/showtrip")
@@ -192,6 +234,21 @@ public class TripController {
 //
 //        return "showtrip";
 //    }
+
+
+
+
+      //Weather In
+
+//        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
+//        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
+//        modelMap.put("mainWeatherData", mainWeatherData);
+
+
+
+
+
+
 
     public TripCityPlaces generateTripCityPlaces(ArrayList<String> filteredCities, YelpService yelpService){
         TripCityPlaces tripCityPlaces = new TripCityPlaces();
