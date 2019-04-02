@@ -93,12 +93,20 @@ public class TripController {
 
         runLogicForShowTripPage(tripStartPoint, tripEndingPoint, model, modelMap);
 
-        return "showtrip";
+//        if(waypoints != null){
+//            modelMap.put("waypoints", waypoints);
+//
+//            return "recalledTrip";
+//        } else {
+
+            return "showtrip";
+
+
     }
 
 
     @RequestMapping("/showtrip")
-    public String displayTripPage(@ModelAttribute StepCoordinates gaslongitude, @ModelAttribute StepCoordinates gaslatitude, @ModelAttribute BlankTrip blankTrip, ModelMap modelMap, Model model){
+    public String displayTripPage(@ModelAttribute BlankTrip blankTrip, ModelMap modelMap, Model model){
             String tripStart = blankTrip.getStart();
             String tripEnd = blankTrip.getEnd();
             modelMap.put("tripStart", tripStart);
