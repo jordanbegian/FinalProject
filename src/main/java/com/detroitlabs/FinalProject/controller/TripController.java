@@ -1,9 +1,13 @@
 package com.detroitlabs.FinalProject.controller;
 
 import com.detroitlabs.FinalProject.model.*;
-import com.detroitlabs.FinalProject.service.*;
+import com.detroitlabs.FinalProject.service.DirectionsService;
+import com.detroitlabs.FinalProject.service.GeoCodingService;
+import com.detroitlabs.FinalProject.service.PictureService;
+import com.detroitlabs.FinalProject.service.YelpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -24,7 +28,7 @@ public class TripController {
     private GeoCodingService geoCodingService;
 
     @Autowired
-    private DirectionsService directionsService;
+   private DirectionsService directionsService;
 
     @Autowired
     PictureWrapper pictureWrapper;
@@ -84,6 +88,8 @@ public class TripController {
         }
     }
 
+
+
 //ATTEMPT WITH REQUEST BODY
 //    @PostMapping("/addToMyTrip")
 //    public String addPlaceToMyTripList(@RequestBody TripToAdd tripToAdd, HttpServletRequest request, Model model){
@@ -100,55 +106,47 @@ public class TripController {
     @RequestMapping("/recalltrip/{tripStart}-{tripEnd}")
     public String recallShowTripPage(@PathVariable(name="tripStart") String tripStart, @PathVariable(name="tripEnd") String tripEnd, Model model, ModelMap modelMap) {
 
-         String tripStartPoint = tripStart;
-         String tripEndingPoint = tripEnd;
+        String tripStartPoint = tripStart;
+        String tripEndingPoint = tripEnd;
 
-         runLogicForShowTripPage(tripStartPoint, tripEndingPoint, model, modelMap);
-
-         return "showtrip";
-    }
-
-
-    @RequestMapping("/showtrip")
-    public String displayTripPage(@ModelAttribute BlankTrip blankTrip, ModelMap modelMap, Model model){
-        String tripStart = blankTrip.getStart();
-        String tripEnd = blankTrip.getEnd();
-        modelMap.put("tripStart", tripStart);
-        modelMap.put("tripEnd", tripEnd);
-
-        runLogicForShowTripPage(tripStart, tripEnd, model, modelMap);
-
-        //Weather Info
-
-//        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
-//        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
-//        modelMap.put("mainWeatherData", mainWeatherData);
-
+        runLogicForShowTripPage(tripStartPoint, tripEndingPoint, model, modelMap);
 
         return "showtrip";
     }
 
-    public void runLogicForShowTripPage(String tripStart, String tripEnd, Model model, ModelMap modelMap){
 
-        //Google Directions
+    @RequestMapping("/showtrip")
+    public String displayTripPage(@ModelAttribute StepCoordinates gaslongitude, @ModelAttribute StepCoordinates gaslatitude, @ModelAttribute BlankTrip blankTrip, ModelMap modelMap, Model model){
+       String tripStart = blankTrip.getStart();
+       String tripEnd = blankTrip.getEnd();
+       modelMap.put("tripStart", tripStart);
+       modelMap.put("tripEnd", tripEnd);
 
-        DirectionSet directionSet =  directionsService.fetchDirectionSetForRoute(tripStart, tripEnd);
-        ArrayList<Step> tripSteps = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps();
+       //Google Directions
 
-        ArrayList<String> cityNames = getCityNamesByStepCoordinates(tripSteps);
+       DirectionSet directionSet =  directionsService.fetchDirectionSetForRoute(tripStart, tripEnd);
+       ArrayList<Step> tripSteps = directionSet.getRoutes().get(0).getStepRepository().get(0).getSteps();
 
-        ArrayList<String> filteredCityNames = filterDuplicateCities(cityNames);
+       ArrayList<String> cityNames = getCityNamesByStepCoordinates(tripSteps);
 
-        TripCityPlaces tripCityPlaces = generateTripCityPlaces(filteredCityNames, yelpService);
+       ArrayList<String> filteredCityNames = filterDuplicateCities(cityNames);
 
-        allPlaces.add(new TripToAdd("Detroit", "Detroit Labs"));
-        model.addAttribute("allPlaces", allPlaces);
+       TripCityPlaces tripCityPlaces = generateTripCityPlaces(filteredCityNames, yelpService);
 
-        modelMap.put("tripSteps", tripSteps);
-        modelMap.put("allCityNames", cityNames);
-        modelMap.put("filteredCityNames",filteredCityNames);
-        modelMap.put("tripCityPlaces", tripCityPlaces.getTripCityPlaces());
-        modelMap.put("googleMapsKey", googleMapsKey);
+       allPlaces.add(new TripToAdd("Detroit", "Detroit Labs"));
+       model.addAttribute("allPlaces", allPlaces);
+
+       modelMap.put("tripSteps", tripSteps);
+       modelMap.put("allCityNames", cityNames);
+       modelMap.put("filteredCityNames",filteredCityNames);
+       modelMap.put("tripCityPlaces", tripCityPlaces.getTripCityPlaces());
+       modelMap.put("googleMapsKey", googleMapsKey);
+
+      //Weather Info
+
+//        Forecast forecast = weatherService.fetchWeatherData(gaslongitude.getLongitude(), gaslatitude.getLatitude());
+//        ArrayList<WeatherData> mainWeatherData = forecast.getWeatherData();
+//        modelMap.put("mainWeatherData", mainWeatherData);
 
        //Gas Station Info
 
@@ -185,6 +183,7 @@ public class TripController {
     }
 
 
+
     public TripCityPlaces generateTripCityPlaces(ArrayList<String> filteredCities, YelpService yelpService){
         TripCityPlaces tripCityPlaces = new TripCityPlaces();
 
@@ -216,13 +215,13 @@ public class TripController {
 
         for(Step step: tripSteps){
 
-            String latAndLong = step.getStartLocation().getFormattedLatAndLong();
+           String latAndLong = step.getStartLocation().getFormattedLatAndLong();
 
-            GeoLocationCityInfo cityRawJSONInfo = geoCodingService.fetchCityInfoByCoordinate(latAndLong);
+           GeoLocationCityInfo cityRawJSONInfo = geoCodingService.fetchCityInfoByCoordinate(latAndLong);
 
-            String cityName = cityRawJSONInfo.getPlusCode().parseCityNameFromCode();
+           String cityName = cityRawJSONInfo.getPlusCode().parseCityNameFromCode();
 
-            allCities.add(cityName);
+           allCities.add(cityName);
         }
 
         return allCities;
